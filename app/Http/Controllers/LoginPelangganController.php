@@ -22,7 +22,7 @@ class LoginPelangganController extends Controller
 
         if (Auth::guard('customers')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect()->intended('/home');
         }
 
 

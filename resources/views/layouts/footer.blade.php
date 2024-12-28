@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Footer</title>
+    <title>Footer with Map</title>
     <!-- Internal CSS -->
     <style>
-
         .content {
             flex: 1;
         }
@@ -22,7 +21,6 @@
             color: #000000;
             padding: 40px 0 0;
             font-family: Arial, sans-serif;
-
         }
 
         .footer-border {
@@ -112,75 +110,109 @@
             font-size: 14px;
             color: #000000;
         }
-    </style>
+
+        .footer-map {
+            margin-top: 20px;
+        }
+
+        .map-container {
+            height: 200px;
+            max-width: 800px;
+            margin: 20px auto 0;
+            border: 1px solid #c5c5c5;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        iframe {
+            border: 0;
+            width: 100%;
+            height: 100%;
+        }
+        </style>
 </head>
 <body>
 
-<div class="content">
-    <!-- Your main content goes here -->
-</div>
+    <div class="content">
+        <!-- Your main content goes here -->
+    </div>
 
-<footer class="footer">
-    <div class="container-fluid">
-        <div class="footer-border"></div>
-        <div class="footer-container">
-            <div class="footer-left">
-                <h2>Influenca</h2>
-                <p>Influence Marketing Agency</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus.</p>
-                <p><i class="fa fa-map-marker"></i> London Eye, London UK</p>
-            </div>
-
-            <div class="footer-middle">
-                <div class="footer-section">
-                    <h4>Navigation</h4>
-                    <ul>
-                        <li><a href="/index">Home</a></li>
-                        <li><a href="{{ route('sepatu.kategori', ['kategori' => 'pria']) }}">Men</a></li>
-                        <li><a href="{{ route('sepatu.kategori', ['kategori' => 'wanita']) }}">Women</a></li>
-                        <li><a href="/aboutus">About us</a></li>
-                    </ul>
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="footer-border"></div>
+            <div class="footer-container">
+                <div class="footer-left">
+                    <h2>Influenca</h2>
+                    <p>Influence Marketing Agency</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus.</p>
+                    <p><i class="fa fa-map-marker"></i> London Eye, London UK</p>
                 </div>
 
-                <div class="footer-section">
-                    <h4>Quick Link</h4>
-                    <ul>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">FAQs</a></li>
-                        <li><a href="#">Booking</a></li>
-                        <li><a href="#">Pages</a></li>
-                    </ul>
-                </div>
-            </div>
+                <div class="footer-middle">
+                    <div class="footer-section">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="/index">Home</a></li>
+                            <li><a href="{{ route('sepatu.kategori', ['kategori' => 'pria']) }}">Men</a></li>
+                            <li><a href="{{ route('sepatu.kategori', ['kategori' => 'wanita']) }}">Women</a></li>
+                            <li><a href="/aboutus">About us</a></li>
+                        </ul>
+                    </div>
 
-            <div class="footer-right">
-                <div class="footer-section">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">404</a></li>
-                    </ul>
+                    <div class="footer-section">
+                        <h4>Quick Link</h4>
+                        <ul>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">FAQs</a></li>
+                            <li><a href="#">Booking</a></li>
+                            <li><a href="#">Pages</a></li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div class="footer-contact">
-                    <p><i class="fa fa-phone"></i> (+62) 822 8514 1312</p>
-                    <p><i class="fa fa-envelope"></i> mail@exmaple.id</p>
-                    <div class="social-media">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-youtube"></i></a>
+                <div class="footer-right">
+                    <div class="footer-section">
+                        <h4>Services</h4>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">404</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-contact">
+                        <p><i class="fa fa-phone"></i> (+62) 822 8514 1312</p>
+                        <p><i class="fa fa-envelope"></i> mail@exmaple.id</p>
+                        <div class="social-media">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-youtube"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="footer-map">
+                <h4 class="text-center">Find Us on Map</h4>
+                <div class="map-container">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1994.5316317111755!2d101.444212!3d1.661813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMcKwMzknNDIuNSJOIDEwMcKwMjYnMzkuMiJF!5e0!3m2!1sen!2sid!4v1702734698204!5m2!1sen!2sid"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
 
-        <div class="footer-bottom">
-            <p>&copy; 2024 Influenca Template - All Rights Reserved</p>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Influenca Template - All Rights Reserved</p>
+            </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
 </body>
 </html>

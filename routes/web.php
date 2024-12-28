@@ -25,10 +25,16 @@ use App\Http\Controllers\wishlistController;
 use App\Models\TransactionDetail;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
-Route::get('/', function () {
+Route::get('/h', function () {
     return view('home');
 });
 
+Route::get('/home', [SepatuController::class, 'index'])->name('sepatu.home');
+Route::get('/', [LoginPelangganController::class, 'loginpelanggan']);
+Route::get('/sepatu/{id}', [SepatuController::class, 'show'])->name('sepatu.detail');
+Route::get('/aboutus', [SepatuController::class, 'aboutus']);
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+// Route::get('/loginpelanggan', [LoginPelangganController::class, 'loginpelanggan']);
 // login logout pelanggan
 Route::get('/loginpelanggan', [LoginPelangganController::class, 'loginpelanggan']);
 Route::post('/loginpelanggan',[LoginPelangganController::class,'authenticate']);
