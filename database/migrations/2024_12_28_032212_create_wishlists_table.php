@@ -9,19 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-
-     public function down(): void
-     {
-         Schema::dropIfExists('carts');
-     }
-
     public function up(): void
     {
-        Schema::create('carts', function (Blueprint $table) {
+        Schema::create('wishlists', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id');
-            $table->foreignId('sepatu_id');
-            $table->foreignId('size_id');
+            $table->foreignId('customer_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('sepatu_id')->constrained('shoes')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,5 +22,8 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-
+    public function down(): void
+    {
+        Schema::dropIfExists('wishlists');
+    }
 };

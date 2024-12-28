@@ -10,7 +10,7 @@
     <div class="col-6">
 
 
-<form action="/cart/update-customer/{{$customers->id }}" method="post">
+<form action="/pemesanan/update-customer/{{$customers->id }}" method="POST">
     @method('PUT')
     @csrf
 
@@ -34,7 +34,7 @@
       </div>
       <div class="mb-3">
         <label for="alamat" class="form-label">Alamat</label>
-        <input type="text" class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat" value="{{ old('alamat',$customers->alamat) }}">
+        <input type="textarea" class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat" value="{{ old('alamat',$customers->alamat) }}">
         @error('alamat')
         <div class="invalid-feedback">
             {{ $message }}
@@ -42,15 +42,16 @@
         @enderror
       </div>
 
-
-
-
-
-
-
       <div class="mb-3">
+        <input type="hidden" name="quantity" id="form_quantity" value="1">
+        <input type="hidden" name="sepatu_id" value="{{ $sepatu->id }}">
+        {{-- <input type="hidden" name="brand" value="{{ $sepatu->brands->nama_brand }}"> --}}
+        <input type="hidden" name="size" id="form_size">
+        <input type="date" name="tanggal" id="tanggal" value="date()" hidden>
+        <input type="hidden" class="form-control @error('date') is-invalid @enderror" name="tanggal" id="date" value="{{ old('date') }}">
 
-        <input type="submit" class="btn btn-primary" name="submit">
+        
+        <button type="submit" class="btn btn-primary" name="submit"> Submit </button>
       </div>
 </form>
 </div>

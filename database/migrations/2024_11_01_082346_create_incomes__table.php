@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('kode_sepatu');
             $table->string('nama');
             $table->char('harga');
+            $table->char('total');
             $table->foreignId('kategori_id');
             $table->foreignId('gambar_id');
             $table->foreignId('merek_id');

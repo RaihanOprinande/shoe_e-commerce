@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cart extends Model
+class TransactionDetail extends Model
 {
     use HasFactory;
 
@@ -14,20 +14,25 @@ class Cart extends Model
         'sepatu_id',
         'size_id',
         'quantity',
-        'tanggal'
-    ];
+        'tanggal',
+        'pengambilan_id',
+        'harga_ongkir',
 
-    public function customers(){
-        return $this->belongsTo(Customer::class,'customer_id');
-    }
+    ];
 
     public function sepatus(){
         return $this->belongsTo(Sepatu::class,'sepatu_id');
     }
+
     public function sizes(){
         return $this->belongsTo(Size::class,'size_id');
     }
-    public function brands(){
-        return $this->belongsTo(Brands::class);
+
+    public function customers(){
+        return $this->belongsTo(Customer::class,'customer_id');
     }
+    public function pengambilan(){
+        return $this->belongsTo(Pengambilan::class,'pengambilan_id');
+    }
+
 }

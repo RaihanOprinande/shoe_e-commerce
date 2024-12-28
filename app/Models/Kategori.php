@@ -14,4 +14,9 @@ class Kategori extends Model
     public function sepatu(){
         return $this->hasMany(Sepatu::class);
     }
+
+    public function checkout(){
+        return $this->hasMany(TransactionDetail::class,'kategori_id','');
+    }
+
 }

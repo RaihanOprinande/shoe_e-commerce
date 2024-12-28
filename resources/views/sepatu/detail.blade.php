@@ -124,7 +124,7 @@
     </style>
 </head>
 <body>
-    <form action="/cart/store" method="POST">
+<form action="/pemesanan" method="POST">
         @csrf
     <div class="container">
         <!-- Image Section -->
@@ -143,7 +143,7 @@
             <div class="size-selection">
                 <h4>Select Size:</h4>
                 @foreach ($sepatu->sizes as $size)
-                    <input type="radio" name="size_id" id="size{{ $size->id }}" value="{{ $size->id }}">
+                    <input type="radio" name="size_id" id="size{{ $size->id }}" value="{{ $size->size }}">
                     <label for="size{{ $size->id }}">{{ $size->size }}</label>
                 @endforeach
             </div>
@@ -163,13 +163,24 @@
 
             <!-- Add to Bag Button -->
 
-                <input type="hidden" name="sepatu_id" value="{{ $sepatu->id }}">
                 <input type="hidden" name="quantity" id="form_quantity" value="1">
+                <input type="hidden" name="sepatu_id" value="{{ $sepatu->id }}">
+                {{-- <input type="hidden" name="brand" value="{{ $sepatu->brands->nama_brand }}"> --}}
                 <input type="hidden" name="size" id="form_size">
-                {{-- <p>silahkan login terlebih dahulu jika ingin membeli produk</p> --}}
-                <button type="submit" class="btn" id="orderButton" disabled>Add to cart</button>
+                <input type="date" name="tanggal" id="tanggal" value="date()" hidden>
+                <input type="hidden" class="form-control @error('date') is-invalid @enderror" name="tanggal" id="date" value="{{ old('date') }}">
+                <div class="row">
+                    <div class="col-4">
+                        <button type="submit" class="btn" id="orderButton" disabled>Purchase</button>
+                    </div>
 
-            </form>
+                </form>
+                <form action="/wishlist/store" method="POST">
+                    @csrf
+                    <input type="hidden" name="sepatu_id" value="{{ $sepatu->id }}">
+                    <button class="btn btn-sm" type="submit">Add to Wishlist</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -212,6 +223,11 @@
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('orderButton').disabled = true;
         });
+
+        document.addEventListener("DOMContentLoaded", function() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').value = today;
+    });
     </script>
 </body>
 </html>

@@ -13,4 +13,8 @@ class Pengambilan extends Model
         'metode',
         'ongkir'
     ];
+
+    public function checkout(){
+        return $this->belongsToMany(TransactionDetail::class,'transaction_detail','pengambilan_id','pengambilan_id');
+    }
 }

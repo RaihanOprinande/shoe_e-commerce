@@ -14,6 +14,10 @@ class Sepatu extends Model
     public function sizes(){
         return $this->belongsToMany(Size::class,'sepatu_sizes','sepatu_id','size_id')->withPivot('quantity');
     }
+
+    public function sepatus(){
+        return $this->belongsToMany(Sepatu::class,'sepatu_sizes','sepatu_id','sepatu_id')->withPivot('quantity');
+    }
     // public function gambars(){
     //     return $this->belongsToMany(sepatui::class,'sepatu_gambars','sepatu_id','sepatui_id');
     // }
@@ -26,11 +30,15 @@ class Sepatu extends Model
     public function colors(){
         return $this->belongsTo(Color::class);
     }
+
     public function size(){
         return $this->belongsTo(Sepatu_size::class);
     }
     public function carts(){
         return $this->belongsToMany(Cart::class,'carts','sepatu_id','sepatu_id')->withPivot('quantity');
+    }
+    public function checkout(){
+        return $this->belongsToMany(TransactionDetail::class,'transaction_details','sepatu_id','sepatu_id')->withPivot('quantity');
     }
 
 }

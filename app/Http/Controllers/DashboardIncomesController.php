@@ -24,13 +24,13 @@ class DashboardIncomesController extends Controller
         $totalPemasukan = Pemasukan::sum('total');  // Total pemasukan
 
         // Buat PDF dengan data yang sudah diproses
-        $pdf = Pdf::loadView('dashboard.income.cetak_pdf', [
-            'pemasukans' => $pemasukans,
-            'totalPemasukan' => $totalPemasukan
-        ]);
+        // $pdf = Pdf::loadView('dashboard.income.cetak_pdf', [
+        //     'pemasukans' => $pemasukans,
+        //     'totalPemasukan' => $totalPemasukan
+        // ]);
 
         // Stream file PDF (langsung download)
-        return $pdf->stream('laporan-data-pemasukan.pdf');
+        // return $pdf->stream('laporan-data-pemasukan.pdf');
     }
     public function index(Request $request)
 {

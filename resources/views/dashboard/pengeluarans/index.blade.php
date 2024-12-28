@@ -32,7 +32,7 @@
         </div>
 
         <div class="col-md-2">
-            <a href="{{ url('/dashboard-pengeluarans/cetak-pdf') }}" class="btn btn-success mb-2">Cetak Pdf</a>
+            {{-- <a href="{{ url('/dashboard-pengeluarans/cetak-pdf') }}" class="btn btn-success mb-2">Cetak Pdf</a> --}}
         </div>
     </div>
 </form>

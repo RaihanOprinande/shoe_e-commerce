@@ -6,30 +6,26 @@
 <table class="table table-bordered">
     <tr>
         <th>No</th>
-        <th>Nama</th>
-        <th>Harga</th>
-        <th>Kategori</th>
-        <th>Merek</th>
-        <th>Size</th>
-        <th>Jumlah</th>
-        <th>Total</th>
-        <th>Bukti</th>
+        <th>Nama_customer</th>
+        <th>Total Harga</th>
+        <th>Tanggal</th>
+        <th>Bukti Pembayaran</th>
         <th>Status</th>
-        <th>Konfirmasi</th>
+        <th>Aksi</th>
     </tr>
     @foreach ($orders as $order)
     <tr>
         <td>{{ $orders->firstItem() + $loop->index }}</td>
-        <td>{{ $order->nama }}</td>
-        <td>{{ number_format($order->harga, 0, ',', '.') }}</td>
-        <td>{{ $order->kategori->nama }}</td>
-        <td>{{ $order->merek->nama_brand }}</td>
-        <td>{{ $order->size->size }}</td>
-        <td>{{ $order->jumlah }}</td>
-        <td>{{ number_format($order->total, 0, ',', '.') }}</td>
+        <td>{{ $order->customers->name }}</td>
+        <td>{{ number_format($totalHarga, 0, ',', '.') }}</td>
+        <td>{{ $order->tanggal }}</td>
+        {{-- <td>{{ $order->merek->nama_brand }}</td> --}}
+        {{-- <td>{{ $order->size->size }}</td> --}}
+        {{-- <td>{{ $order->jumlah }}</td> --}}
+        {{-- <td>{{ number_format($order->total, 0, ',', '.') }}</td> --}}
         <td>
-            @if($order->bukti)
-                <img src="{{ asset('storage/' . $order->bukti) }}" alt="Bukti Pembayaran" style="width: 100px; height: auto; cursor: pointer;"
+            @if($order->bukti_transaksi)
+                <img src="{{ asset('storage/' . $order->bukti_transaksi) }}" alt="Bukti Pembayaran" style="width: 100px; height: auto; cursor: pointer;"
                      data-bs-toggle="modal" data-bs-target="#imageModal{{ $order->id }}">
                 <!-- Modal -->
                 <div class="modal fade" id="imageModal{{ $order->id }}" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
@@ -40,11 +36,12 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <img src="{{ asset('storage/' . $order->bukti) }}" alt="Bukti Pembayaran" class="img-fluid">
+                                <img src="{{ asset('storage/' . $order->bukti_transaksi) }}" alt="Bukti Pembayaran" class="img-fluid">
                             </div>
                         </div>
                     </div>
                 </div>
+                
             @else
                 Tidak ada bukti
             @endif

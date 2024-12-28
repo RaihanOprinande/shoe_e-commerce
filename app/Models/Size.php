@@ -18,4 +18,8 @@ class Size extends Model
     public function carts(){
         return $this->belongsToMany(Cart::class,'carts','size_id','size_id')->withPivot('quantity');
     }
+
+    public function checkout(){
+        return $this->belongsToMany(TransactionDetail::class,'transaction_details','size_id','size_id')->withPivot('quantity');
+    }
 }

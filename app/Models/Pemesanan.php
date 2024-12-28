@@ -12,14 +12,14 @@ class Pemesanan extends Model
 
     // Tentukan kolom yang dapat diisi
     protected $fillable = [
-        'nama',
-        'harga',
-        'merek_id',
-        'kategori_id',
+        'customer_id',
+        'sepatu_id',
         'size_id',
-        'jumlah',
-        'total',
-        'bukti',
+        'tanggal',
+        'pengambilan_id',
+        'harga_ongkir',
+        'quantity',
+        'bukti_transaksi',
         'status'
     ];
 
@@ -28,13 +28,17 @@ class Pemesanan extends Model
         return $this->status === 'pending' ? 'Pesanan Sedang Dibuat' : 'Pesanan Sukses';
     }
 
-    public function sepatu()
+    public function sepatus()
     {
-        return $this->belongsTo(Sepatu::class);
+        return $this->belongsTo(Sepatu::class,'sepatu_id');
     }
     public function kategori()
     {
         return $this->belongsTo(Kategori::class);
+    }
+    public function customers()
+    {
+        return $this->belongsTo(Customer::class,'customer_id');
     }
 
     public function merek(){

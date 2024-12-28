@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('kategori_id')->comment('Kategori sepatu');
             $table->integer('harga')->comment('Harga sepatu');
             $table->integer('quantity')->comment('Jumlah sepatu');
+            $table->integer('uang');
             $table->date('date');
             $table->timestamps();
         });

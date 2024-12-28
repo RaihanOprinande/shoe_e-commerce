@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('transaction_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id');
             $table->foreignId('sepatu_id');
@@ -19,9 +19,7 @@ return new class extends Migration
             $table->date('tanggal');
             $table->foreignId('pengambilan_id');
             $table->string('harga_ongkir');
-            $table->char('quantity');
-            $table->string('bukti_transaksi');
-            $table->string('status');
+            $table->string('quantity');
             $table->timestamps();
         });
     }
@@ -31,6 +29,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('transaction_details');
+
     }
 };

@@ -69,9 +69,9 @@
         </tfoot>
     </table>
 
-    <a href="{{ url('/dashboard-income/cetak-pdf') }}" class="btn btn-success mb-2">Cetak Pdf</a>
+    {{-- <a href="{{ url('/dashboard-income/cetak-pdf') }}" class="btn btn-success mb-2">Cetak Pdf</a> --}}
 
     <div class="d-flex justify-content-center mt-3">
-        {{ $incomes->links() }} <!-- Pagination jika data banyak -->
+        {{ $incomes->links() }}
     </div>
     @endsection

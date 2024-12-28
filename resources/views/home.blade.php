@@ -107,30 +107,6 @@
                     </div>
                 </a>
                 @endforeach
-                {{-- <div class="isi-list">
-                    <img src="/images/sepatu4.jpeg" alt="" height="300px" width="250px">
-                    <h6 class="ms-1">pria</h6>
-                    <h5 class="ms-1">sepatu wahyu</h5>
-                    <h6 class="ms-1">Rp. 400.000</h6>
-                </div>
-                <div class="isi-list">
-                    <img src="/images/sepatu5.jpeg" alt="" height="300px" width="250px">
-                    <h6>wanita</h6>
-                    <h5>sepatu fauzan</h5>
-                    <h6>Rp. 400.000</h6>
-                </div>
-                <div class="isi-list">
-                    <img src="/images/sepatu5.jpeg" alt="" height="300px" width="250px">
-                    <h6>wanita</h6>
-                    <h5>sepatu si anu</h5>
-                    <h6>Rp. 400.000</h6>
-                </div>
-                <div class="isi-list">
-                    <img src="/images/sepatu5.jpeg" alt="" height="300px" width="250px">
-                    <h6>wanita</h6>
-                    <h5>sepatu si ini</h5>
-                    <h6>Rp. 400.000</h6>
-                </div> --}}
             </div>
         </div>
     </div>

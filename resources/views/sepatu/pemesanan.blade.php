@@ -5,80 +5,87 @@
 @endif
 
 @section('content')
-    <style>
-        .detail-container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+<div class="container-fluid">
+    <h1 class="text-center mt-4 mb-5">Detail Pemesanan</h1>
+    <table class="table table-bordered">
+        <tr>
+            <td><h5>gambar</h5></td>
+            <td><h5>Sepatu</h5></td>
+            <td><h5>Brand</h5></td>
+            <td><h5>Size</h5></td>
+            <td><h5>Quantity</h5></td>
+            <td><h5>Harga satuan</h5></td>
+            <td><h5>Total Harga</h5></td>
+        </tr>
+        <tr>
+            <td><img src="{{ asset('storage/' . $sepatu->gambar_sepatu) }}" alt="" style="height: 250px; width: 250px; object-fit: contain;"></td>
+            <td>{{ $sepatu->nama }}</td>
+            <td>{{ $sepatu->brands->nama_brand }}</td>
+            <td>{{ $ukuran }}</td>
+            <td>{{ $jumlah }}</td>
+            <td>Rp. {{ number_format($sepatu->harga, 0, ',', '.') }}</td>
+            <td><span id="totalHarga">Rp {{ number_format($totalHarga, 0, ',', '.') }}</span></td>
+    </table>
 
-        h1 {
-            margin-bottom: 20px;
-        }
+        <h4>Customer Information</h4>
+    <div class="mb-3">
+        <table class="table table-bordered">
+            <tr>
+                <th>Nama</th>
+                <th>No.HP</th>
+                <th>Alamat</th>
+                <th>Aksi</th>
+            </tr>
+            <tr>
+                <td>{{ $customer->name }}</td>
+                <td>{{ $customer->nohp }}</td>
+                <td>{{ $customer->alamat }}</td>
+                <td>
+                    <a href="/pemesanan/update-customer/{{ $customer->id }}/edit" class="btn btn-warning btn-sm" title="Edit">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col">
 
-        p {
-            margin: 10px 0;
-        }
+            {{-- Metode pengambilan --}}
+            <div class="form-group">
+                <label for="pengambilan_id"><strong>Pilih Pengambilan barang</strong></label>
+                <select name="pengambilan_id" id="pengambilan_id" class="form-control mt-2" required>
+                    <option value="">-- Kiriman hanya berlaku di kota Dumai --</option>
+                    @foreach ($pengambilans as $pengambilan)
+                    <option value="{{ $pengambilan->id }}">{{ $pengambilan->metode }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="col">
 
-        .btn {
-            margin-top: 20px;
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #000;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
+            {{-- Input untuk file bukti pembayaran --}}
+            <div class="upload-container">
+                <label for="bukti" class="form-label"><strong>Upload Bukti</strong></label>
+                <input type="file" accept="image/*" class="form-control @error('bukti') is-invalid @enderror" id="bukti" name="bukti" required>
+                @error('bukti')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+        </div>
+        <div class="col">
+            <div class="bank-pemilik mt-4">
+                <p>No Rekening Pemilik: <strong>5434 0100 3078 521</strong><br>
+                    Atas Nama: <strong>M WAHYU FIKRI</strong></p>
 
-        .btn:hover {
-            background-color: #333;
-        }
+            </div>
+        </div>
 
-        .upload-container {
-            display: flex;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .upload-container label {
-            margin-right: 10px;
-        }
-
-        input[type="file"] {
-            flex: 1;
-        }
-
-        .action-buttons {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .alert-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-    </style>
-
+    </div>
+</div>
     <div class="detail-container">
-        <h1>Detail Pemesanan</h1>
-        <p>Sepatu: {{ $sepatu->nama }}</p>
-        <p>Harga per Unit: Rp {{ number_format($sepatu->harga, 0, ',', '.') }}</p>
-        <p>Jumlah: {{ $jumlah }}</p>
-        <p>Ukuran: {{ $ukuran }}</p>
-        <p>Total Harga: Rp {{ number_format($totalHarga, 0, ',', '.') }}</p>
-
-        <p>No Rekening Pemilik: <strong>5434 0100 3078 521</strong><br>
-            Atas Nama: <strong>M WAHYU FIKRI</strong></p>
-
         {{-- Menampilkan pesan error jika ada --}}
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -90,36 +97,41 @@
             </div>
         @endif
 
-        <form action="{{ route('proses.bayar') }}" method="POST" enctype="multipart/form-data">
+        <form action="/proses-bayar" method="POST" enctype="multipart/form-data">
             @csrf
             {{-- Data tersembunyi untuk form --}}
             <input type="hidden" name="id" value="{{ $sepatu->id }}">
-            <input type="hidden" name="nama" value="{{ $sepatu->nama }}">
-            <input type="hidden" name="harga" value="{{ $sepatu->harga }}">
-            <input type="hidden" name="kategori_id" value="{{ $sepatu->kategori_id }}">
-            <input type="hidden" name="merek_id" value="{{ $sepatu->brands_id }}">
-            <input type="hidden" name="jumlah" value="{{ $jumlah }}">
-            <input type="hidden" name="ukuran" value="{{ $ukuran }}">
+            <input type="hidden" name="quantity" value="{{ $jumlah }}">
+            <input type="hidden" name="size" value="{{ $ukuran }}">
             <input type="hidden" name="totalHarga" value="{{ $totalHarga }}">
-
-            {{-- Input untuk file bukti pembayaran --}}
-            <div class="upload-container">
-                <label for="bukti" class="form-label">Upload Bukti:</label>
-                <input type="file" accept="image/*"
-                       class="form-control @error('bukti') is-invalid @enderror"
-                       id="bukti" name="bukti" required>
-                @error('bukti')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
+            <input type="hidden" name="totalHarga" id="hiddenTotalHarga" value="{{ $totalHarga }}">
+            <input type="hidden" name="pengambilan_id" id="hiddenPengambilanId">
 
             {{-- Tombol aksi --}}
             <div class="action-buttons">
-                <button type="submit" class="btn">Konfirmasi</button>
-                <a href="{{ route('sepatu.detail', ['id' => $sepatu->id]) }}" class="btn">Kembali</a>
+                <button type="submit" class="btn btn-success">Konfirmasi</button>
+                <a href="/sepatu/{{ $sepatu->id }}" class="btn btn-danger">Kembali</a>
             </div>
         </form>
     </div>
+
+    <script>
+        const baseTotalHarga = {{ $totalHarga }};
+        const ongkir = 5000; // Example shipping cost
+
+        function updateTotalHarga() {
+            const pengambilanId = document.getElementById('pengambilan_id').value;
+            let totalHarga = baseTotalHarga;
+
+            if (pengambilanId == 1) {
+                totalHarga += ongkir;
+            }
+
+            document.getElementById('totalHarga').innerText = totalHarga.toLocaleString('id-ID');
+            document.getElementById('hiddenTotalHarga').value = totalHarga;
+            document.getElementById('hiddenPengambilanId').value = pengambilanId;
+        }
+
+        document.getElementById('pengambilan_id').addEventListener('change', updateTotalHarga);
+    </script>
 @endsection

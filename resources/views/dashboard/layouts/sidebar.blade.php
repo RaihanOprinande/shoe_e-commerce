@@ -113,6 +113,12 @@
                                     Pengeluaran
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center gap-2" href="/dashboard-pengeluarans">
+                                    <i class="bi bi-graph-down-arrow"></i>
+                                    Kategori Pengeluaran
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

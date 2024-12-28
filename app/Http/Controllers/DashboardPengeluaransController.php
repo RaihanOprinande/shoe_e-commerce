@@ -15,8 +15,8 @@ class DashboardPengeluaransController extends Controller
 {
 
     public function show(){
-        $pdf = Pdf::loadView('dashboard.pengeluarans.cetak_pdf', ['pengeluarans'=> Pengeluaran::all()]);
-        return $pdf->stream('laporan-data-pengeluaran.pdf');
+        // $pdf = Pdf::loadView('dashboard.pengeluarans.cetak_pdf', ['pengeluarans'=> Pengeluaran::all()]);
+        // return $pdf->stream('laporan-data-pengeluaran.pdf');
     }
     /**
      * Display a listing of the resource.
