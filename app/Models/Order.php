@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pemesanan extends Model
+class Order extends Model
 {
     use HasFactory;
     protected $table = 'orders';
@@ -32,19 +32,14 @@ class Pemesanan extends Model
     {
         return $this->belongsTo(Sepatu::class,'sepatu_id');
     }
-    public function kategori()
-    {
-        return $this->belongsTo(Kategori::class);
-    }
     public function customers()
     {
         return $this->belongsTo(Customer::class,'customer_id');
     }
-
-    public function merek(){
-        return $this->belongsTo(Brands::class);
+    public function sizes(){
+        return $this->belongsTo(Size::class,'size_id');
     }
-    public function size(){
-        return $this->belongsTo(Size::class);
+    public function pengambilans(){
+        return $this->belongsTo(Pengambilan::class,'pengambilan_id');
     }
 }

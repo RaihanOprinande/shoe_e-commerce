@@ -17,7 +17,7 @@
     <tr>
         <td>{{ $orders->firstItem() + $loop->index }}</td>
         <td>{{ $order->customers->name }}</td>
-        <td>{{ number_format($totalHarga, 0, ',', '.') }}</td>
+        <td>{{ number_format($order->sepatus->harga * $order->quantity + $order->pengambilans->ongkir, 0, ',', '.') }}</td>
         <td>{{ $order->tanggal }}</td>
         {{-- <td>{{ $order->merek->nama_brand }}</td> --}}
         {{-- <td>{{ $order->size->size }}</td> --}}
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             @else
                 Tidak ada bukti
             @endif

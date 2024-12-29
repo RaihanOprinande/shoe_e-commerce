@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Pemesanan;
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
@@ -11,8 +12,8 @@ class DashboardOrderController extends Controller
 {
     public function index()
     {
-        
-        $orders=Pemesanan::with('customers','sepatus')->latest();
+
+        $orders=Order::with('customers','sepatus','sizes','pengambilans')->latest();
         $transactions = TransactionDetail::with('sepatus','sizes','customers')->where('customer_id',Auth::guard('customers')->id())->get();
         $totalHarga = $transactions->map(function($transactions) {
             return ($transactions->quantity * $transactions->sepatus->harga)+$transactions->pengambilan->ongkir;
@@ -25,7 +26,7 @@ class DashboardOrderController extends Controller
         $transactionUser = $transactions->get();
 
         foreach ($transactionUser as $item ) {
-            Pemesanan::create([
+            Order::create([
                 'customer_id' => $item->customer_id,
                 'sepatu_id' => $item->sepatu_id,
                 'size_id' => $item->size_id,
@@ -45,7 +46,7 @@ class DashboardOrderController extends Controller
 
     public function destroy(string $id)
      {
-        Pemesanan::destroy($id);
+        Order::destroy($id);
         return redirect('dashboard-order')->with('pesan','Data berhasil dihapus');
      }
 

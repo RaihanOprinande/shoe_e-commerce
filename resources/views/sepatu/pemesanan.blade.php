@@ -1,8 +1,8 @@
 @extends('layouts.main')
 
-@if ($errors->any())
+{{-- @if ($errors->any())
     {{ dd($errors->all()) }}
-@endif
+@endif --}}
 
 @section('content')
 <div class="container-fluid">
@@ -17,15 +17,19 @@
             <td><h5>Harga satuan</h5></td>
             <td><h5>Total Harga</h5></td>
         </tr>
+        @foreach ($carts as $cart)
+
         <tr>
-            <td><img src="{{ asset('storage/' . $sepatu->gambar_sepatu) }}" alt="" style="height: 250px; width: 250px; object-fit: contain;"></td>
-            <td>{{ $sepatu->nama }}</td>
-            <td>{{ $sepatu->brands->nama_brand }}</td>
-            <td>{{ $ukuran }}</td>
-            <td>{{ $jumlah }}</td>
-            <td>Rp. {{ number_format($sepatu->harga, 0, ',', '.') }}</td>
-            <td><span id="totalHarga">Rp {{ number_format($totalHarga, 0, ',', '.') }}</span></td>
-    </table>
+            <td><img src="{{ asset('storage/' . $cart->sepatus->gambar_sepatu) }}" alt="" style="height: 250px; width: 250px; object-fit: contain;"></td>
+            <td>{{ $cart->sepatus->nama }}</td>
+            <td>{{ $cart->sepatus->brands->nama_brand }}</td>
+            <td>{{ $cart->size_id }}</td>
+            <td>{{ $cart->quantity }}</td>
+            <td>Rp. {{ number_format($cart->sepatus->harga, 0, ',', '.') }}</td>
+            <td><span id="totalHarga">Rp {{ number_format($totalHarga + $cart->quantity * $cart->sepatus->harga, 0, ',', '.') }}</span></td>
+        </tr>
+        @endforeach
+        </table>
 
         <h4>Customer Information</h4>
     <div class="mb-3">
@@ -37,11 +41,11 @@
                 <th>Aksi</th>
             </tr>
             <tr>
-                <td>{{ $customer->name }}</td>
-                <td>{{ $customer->nohp }}</td>
-                <td>{{ $customer->alamat }}</td>
+                <td>{{ $cart->customers->name }}</td>
+                <td>{{ $cart->customers->nohp }}</td>
+                <td>{{ $cart->customers->alamat }}</td>
                 <td>
-                    <a href="/pemesanan/update-customer/{{ $customer->id }}/edit" class="btn btn-warning btn-sm" title="Edit">
+                    <a href="/pemesanan/update-customer/{{ $cart->customers->id }}/edit" class="btn btn-warning btn-sm" title="Edit">
                         <i class="bi bi-pencil-square"></i>
                     </a>
                 </td>
@@ -50,7 +54,7 @@
     </div>
     <div class="row">
         <div class="col">
-
+            <form action="/proses-bayar" method="POST" enctype="multipart/form-data">
             {{-- Metode pengambilan --}}
             <div class="form-group">
                 <label for="pengambilan_id"><strong>Pilih Pengambilan barang</strong></label>
@@ -97,31 +101,44 @@
             </div>
         @endif
 
-        <form action="/proses-bayar" method="POST" enctype="multipart/form-data">
-            @csrf
-            {{-- Data tersembunyi untuk form --}}
-            <input type="hidden" name="id" value="{{ $sepatu->id }}">
-            <input type="hidden" name="quantity" value="{{ $jumlah }}">
-            <input type="hidden" name="size" value="{{ $ukuran }}">
-            <input type="hidden" name="totalHarga" value="{{ $totalHarga }}">
-            <input type="hidden" name="totalHarga" id="hiddenTotalHarga" value="{{ $totalHarga }}">
-            <input type="hidden" name="pengambilan_id" id="hiddenPengambilanId">
+        <div class="row">
+            <div class="col-1">
 
-            {{-- Tombol aksi --}}
-            <div class="action-buttons">
-                <button type="submit" class="btn btn-success">Konfirmasi</button>
-                <a href="/sepatu/{{ $sepatu->id }}" class="btn btn-danger">Kembali</a>
+                    @csrf
+                    {{-- Data tersembunyi untuk form --}}
+                    <input type="hidden" name="sepatu_id" value="{{ $cart->sepatu_id }}">
+                    <input type="hidden" name="size" value="{{ $cart->size_id }}">
+                    <input type="hidden" name="quantity" value="{{ $cart->quantity }}">
+                    <input type="hidden" name="pengambilan_id" id="hiddenPengambilanId" value="{{ $pengambilan->id }}">
+
+
+                    {{-- Tombol aksi --}}
+                    <button type="submit" class="btn btn-success">Konfirmasi</button>
+                </form>
+                </div>
+                <div class="col">
+                    <form action="/clean-cart/{{ $cart->customer_id }}" method="POST">
+                        @method('POST')
+                        @csrf
+                        <button class="btn btn-small btn-danger" type="submit">kembali</button>
+                </form>
             </div>
-        </form>
-    </div>
+        </div>
 
+
+    </div>
     <script>
         const baseTotalHarga = {{ $totalHarga }};
         const ongkir = 5000; // Example shipping cost
+        const carts = @json($carts); // Pass the cart items to JavaScript
 
         function updateTotalHarga() {
             const pengambilanId = document.getElementById('pengambilan_id').value;
-            let totalHarga = baseTotalHarga;
+            let totalHarga = 0;
+
+            carts.forEach(cart => {
+                totalHarga += cart.quantity * cart.sepatus.harga;
+            });
 
             if (pengambilanId == 1) {
                 totalHarga += ongkir;

@@ -165,7 +165,6 @@
 
                 <input type="hidden" name="quantity" id="form_quantity" value="1">
                 <input type="hidden" name="sepatu_id" value="{{ $sepatu->id }}">
-                {{-- <input type="hidden" name="brand" value="{{ $sepatu->brands->nama_brand }}"> --}}
                 <input type="hidden" name="size" id="form_size">
                 <input type="date" name="tanggal" id="tanggal" value="date()" hidden>
                 <input type="hidden" class="form-control @error('date') is-invalid @enderror" name="tanggal" id="date" value="{{ old('date') }}">

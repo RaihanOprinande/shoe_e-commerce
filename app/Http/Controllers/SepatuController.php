@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brands;
+use App\Models\Cart;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Sepatu;
 use App\Models\Merek;
+use App\Models\Order;
 use App\Models\Pemasukan;
 use App\Models\Size;
 use App\Models\Pemesanan;
@@ -45,52 +47,66 @@ class SepatuController extends Controller
     return view('sepatu.list', compact('sepatus'));
     }
     public function pemesanan(Request $request)
-{
-    $sepatu = Sepatu::with('brands')->find($request->sepatu_id);
-    $customer = Auth::guard('customers')->user();
-    $pengambilans = Pengambilan::all();
-    $jumlah = $request->quantity;
-    $ukuran = $request->size;
-    $totalHarga = $jumlah * $sepatu->harga;
+    {
+        Cart::create([
+            'customer_id' => Auth::guard('customers')->id(),
+            'sepatu_id' => $request->sepatu_id,
+            'size_id' => $request->size_id,
+            'quantity' => $request->quantity,
+        ]);
 
 
-    return view('sepatu.pemesanan', compact('sepatu', 'jumlah','ukuran', 'totalHarga','pengambilans','customer'));
+        return redirect('keranjang')->with('success', 'Sepatu berhasil ditambahkan ke keranjang');
     }
+
+    public function keranjang()
+    {
+        $carts = Cart::with('sepatus', 'sizes','customers')->where('customer_id', Auth::guard('customers')->id())->get();
+        $pengambilans = Pengambilan::all();
+        $totalHarga = 0;
+        return view('sepatu.pemesanan', compact('carts','pengambilans','totalHarga'));
+    }
+
     public function edit(string $id){
         $customers = Customer::find($id);
         return view('sepatu.editcart',compact('customers'));
     }
 
-public function update(Request $request, $id)
-{
-// Validasi input
-$validated = $request->validate([
+    public function cleanCart(Request $request)
+    {
+        Cart::where('customer_id',Auth::guard('customers')->id())->delete();
+
+        return redirect('home')->with('success', 'Data berhasil dihapus');
+    }
+
+
+    public function update(Request $request, $id)
+    {
+    // Validasi input
+    $validated = $request->validate([
     'name' => 'nullable',
     'nohp' => 'nullable',
     'alamat' => 'required',
-]);
+    ]);
 
-$sepatu = Sepatu::with('brands')->find($request->sepatu_id);
-$customer = Auth::guard('customers')->user();
-$pengambilans = Pengambilan::all();
-$jumlah = $request->quantity;
-$ukuran = $request->size;
-$totalHarga = $jumlah * $sepatu->harga;
+    // $carts = Cart::with('sepatus','sizes','customers')->where('customer_id', Auth::guard('customers')->id())->get()->find($request->id);
+    // $customer = Auth::guard('customers')->user();
+    // $pengambilans = Pengambilan::all();
 
-// Update data customer
-Customer::where('id',$id)->update($validated);
+    // // Update data customer
+    Customer::where('id',$id)->update($validated);
 
-// Redirect dengan pesan sukses
-return redirect('pemesanan')->with('pesan', 'Customer berhasil diperbarui!');
-}
+    // Redirect dengan pesan sukses
+    return redirect('keranjang')->with('success', 'Data berhasil diupdate');
+    }
 
 
-public function prosesBayar(Request $request)
-{
+    public function prosesBayar(Request $request)
+    {
     $request->validate([
         'bukti' => 'required|image|mimes:jpeg,png,jpg,gif|max:5000',
-        'id' => 'required|exists:shoes,id', // Memastikan sepatu ID ada
-        'jumlah' => 'required|integer',
+        'sepatu_id' => 'required', // Memastikan sepatu ID ada
+        'quantity' => 'required',
     ], [
         'bukti.required' => 'Harap upload bukti pembayaran.',
         'bukti.image' => 'File yang diupload harus berupa gambar.',
@@ -101,33 +117,35 @@ public function prosesBayar(Request $request)
 
 
     // Mengambil data sepatu beserta warna dan ukuran
-    $sepatu = Sepatu::with(['colors', 'sizes'])->find($request->id);
-    $totalHarga = $sepatu->harga * $request->jumlah; // Menghitung total harga
+    $sepatu = Sepatu::with(['colors', 'sizes'])->find($request->sepatu_id);
+    // $totalHarga = $sepatu->harga * $request->jumlah;
 
 
     // Menyimpan bukti bukti pembayaran
     $path = $request->file('bukti')->store('bukti', 'public');
 
     // Menyimpan data pemesanan ke dalam tabel `orders`
-    Pemesanan::create([
+    Order::create([
         'customer_id' => Auth::guard('customers')->id(),
-        'sepatu_id' => $request->id,
-        'jumlah' => $request->jumlah,
-        'size_id' => $request->ukuran,
-        'total' => $totalHarga,
-        'bukti' => $path,
+        'sepatu_id' => $request->sepatu_id,
+        'size_id' => $request->size,
+        'tanggal'=>now(),
+        'pengambilan_id' => $request->pengambilan_id,
+        'quantity' => $request->quantity,
+        'bukti_transaksi' => $path,
         'status' => 'pending',
     ]);
+    Cart::where('customer_id',Auth::guard('customers')->id())->delete();
 
-    return redirect('/')->with('success', 'Pemesanan berhasil disimpan');
+    return redirect('home')->with('success', 'Pemesanan berhasil disimpan');
 
 
-}
+    }
 
 public function confirmOrder($id)
 {
     // Temukan pesanan berdasarkan ID
-    $order = Pemesanan::findOrFail($id);
+    $order = Order::findOrFail($id);
 
     // Update status pesanan menjadi "diproses"
     $order->status = 'processed';

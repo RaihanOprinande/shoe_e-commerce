@@ -58,11 +58,13 @@ Route::resource('/list',ListController::class);
 Route::get('/merek/{id}/sepatu', [ListController::class, 'sepatuByMerek']);
 
 // sepatu controller
-Route::get('/', [SepatuController::class, 'index'])->name('sepatu.home');
+// Route::get('/', [SepatuController::class, 'index'])->name('sepatu.home');
 Route::get('/sepatu/{id}', [SepatuController::class, 'show'])->name('sepatu.detail');
 Route::get('/aboutus', [SepatuController::class, 'aboutus']);
 Route::post('/pemesanan', [SepatuController::class, 'pemesanan']);
+Route::get('/keranjang', [SepatuController::class, 'keranjang']);
 Route::post('/proses-bayar', [SepatuController::class, 'prosesBayar']);
+Route::post('/clean-cart/{id}', [SepatuController::class, 'cleanCart']);
 Route::resource('/pemesanan/update-customer', SepatuController::class);
 
 //wishlist
