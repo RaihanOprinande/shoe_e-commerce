@@ -19,7 +19,7 @@
               <a class="nav-link active" aria-current="page" href="/wishlist">Wishlist</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/#">Order History</a>
+                <a class="nav-link active" aria-current="page" href="/history-order">Order History</a>
               </li>
           <li class="nav-item">
             <a class="nav-link active" href="/aboutus">About Us</a>

@@ -17,6 +17,7 @@ use App\Http\Controllers\DashboardOrderController;
 use App\Http\Controllers\DashboardPengambilanController;
 use App\Http\Controllers\DashboardSepatuSizeController;
 use App\Http\Controllers\DashboardPengeluaransController;
+use App\Http\Controllers\HistoryOrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LoginPelangganController;
@@ -72,6 +73,10 @@ Route::get('/wishlist',[wishlistController::class,'index']);
 Route::post('/wishlist/store',[wishlistController::class,'store']);
 Route::resource('/wishlist',wishlistController::class);
 
+//history order
+Route::get('/history-order',[HistoryOrderController::class,'index']);
+Route::resource('/detail-order',HistoryOrderController::class);
+
 
 
 Route::get('/sepatu/kategori/{kategori}', [SepatuController::class, 'filterByKategori'])->name('sepatu.kategori');
@@ -107,7 +112,7 @@ Route::resource('/cartedit',cartController::class);
 
 
 
-Route::put('/dashboard-order/{id}/confirm', [SepatuController::class, 'confirmOrder'])->name('orders.confirm');
+Route::put('/dashboard-order/{id}/confirm', [DashboardOrderController::class, 'confirmOrder'])->name('orders.confirm');
 Route::resource('/dashboard-income',DashboardIncomesController::class)->middleware(['auth']);
 
 

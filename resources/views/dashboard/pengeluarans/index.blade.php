@@ -10,7 +10,7 @@
   </div>
 @endif
 
-<a href="/dashboard-pengeluarans/create" class="btn btn-primary mb-2">Tambah Pengeluaran</a>
+<a href="/dashboard-pengeluarans/create" class="btn btn-dark mb-2">Tambah Pengeluaran</a>
 
 <form method="GET" action="{{ url('/dashboard-pengeluarans') }}" class="mb-3">
     <div class="row">
@@ -28,7 +28,7 @@
             <input type="date" name="date" class="form-control" value="{{ request('date') }}">
         </div>
         <div class="col-md-2">
-            <button type="submit" class="btn btn-primary">Filter</button>
+            <button type="submit" class="btn btn-dark">Filter</button>
         </div>
 
         <div class="col-md-2">
@@ -38,7 +38,7 @@
 </form>
 
 <table class="table table-bordered">
-    <thead class="table-primary">
+    <thead class="table-dark">
         <tr>
             <th>No</th>
             <th>Kategori</th>
@@ -58,11 +58,11 @@
             <td>Rp {{ number_format($pengeluaran->uang, 0, ',', '.') }}</td>
             <td class="text-nowrap">
 
-                <a href="/dashboard-pengeluarans/{{ $pengeluaran->id }}/edit" class="btn btn-warning btn-sm">Edit</a>
+                <a href="/dashboard-pengeluarans/{{ $pengeluaran->id }}/edit" class="btn btn-warning">Edit</a>
                 <form action="/dashboard-pengeluarans/{{ $pengeluaran->id }}" method="post" class="d-inline">
                     @method('DELETE')
                     @csrf
-                    <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin akan menghapus data ini?')">Hapus</button>
+                    <button class="btn btn-danger" onclick="return confirm('Yakin akan menghapus data ini?')">Hapus</button>
                 </form>
             </td>
         </tr>

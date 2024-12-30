@@ -143,8 +143,8 @@
             <div class="size-selection">
                 <h4>Select Size:</h4>
                 @foreach ($sepatu->sizes as $size)
-                    <input type="radio" name="size_id" id="size{{ $size->id }}" value="{{ $size->size }}">
-                    <label for="size{{ $size->id }}">{{ $size->size }}</label>
+                <input type="radio" name="size_id" id="size{{ $size->id }}" value="{{ $size->id }}" {{ $size->pivot->quantity == 0 ? 'disabled' : '' }}>
+                <label for="size{{ $size->id }}">{{ $size->size }} ({{ $size->pivot->quantity }})</label>
                 @endforeach
             </div>
 

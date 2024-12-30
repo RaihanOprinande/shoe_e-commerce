@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Pemasukan;
 use App\Models\Pemesanan;
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
@@ -49,6 +50,34 @@ class DashboardOrderController extends Controller
         Order::destroy($id);
         return redirect('dashboard-order')->with('pesan','Data berhasil dihapus');
      }
+
+     public function confirmOrder($id)
+{
+    // Temukan pesanan berdasarkan ID
+    $order = Order::with('sepatus','sizes')->findOrFail($id);
+    $total_harga = $order->sepatus->harga * $order->quantity + $order->pengambilans->ongkir;
+    // Update status pesanan menjadi "diproses"
+    $order->status = 'processed';
+    $order->save();
+
+    // Simpan data ke tabel pemasukan
+    Pemasukan::create([
+        'sepatu_id' => $order->sepatu_id,
+        'size_id'=> $order->size_id,
+        'total_harga'=> $total_harga,
+        'quantity' => $order->quantity,
+        'tanggal'=> $order->tanggal,
+    ]);
+
+    // Redirect dengan pesan sukses
+    return redirect()->back()->with('success', 'Status pesanan berhasil diperbarui dan data telah disimpan ke tabel pemasukan.');
+}
+
+    public function show($id)
+    {
+        $orders = Order::with('customers','sepatus','sizes','pengambilans')->findOrFail($id);
+        return view('dashboard.order.show',compact('orders'));
+    }
 
 
 

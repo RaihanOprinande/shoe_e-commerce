@@ -14,7 +14,7 @@ class Customer extends Authenticatable
     }
 
     public function checkout(){
-        return $this->belongsToMany(Pemesanan::class,'orders','customer_id','customer_id');
+        return $this->belongsToMany(Order::class,'orders','customer_id','customer_id');
     }
 }
 

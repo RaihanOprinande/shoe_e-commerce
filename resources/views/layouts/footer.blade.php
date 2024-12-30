@@ -145,10 +145,10 @@
             <div class="footer-border"></div>
             <div class="footer-container">
                 <div class="footer-left">
-                    <h2>Influenca</h2>
-                    <p>Influence Marketing Agency</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus.</p>
-                    <p><i class="fa fa-map-marker"></i> London Eye, London UK</p>
+                    <h2>Alamat</h2>
+                    {{-- <p>Influence Marketing Agency</p> --}}
+                    <p>JL. Jendral Sudirman, Pasar Lepin</p>
+                    <p><i class="fa fa-map-marker"></i> Dumai, Indonesia</p>
                 </div>
 
                 <div class="footer-middle">

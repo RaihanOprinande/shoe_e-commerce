@@ -9,7 +9,7 @@
                 <input type="date" name="tanggal" class="form-control" value="{{ request('tanggal') }}">
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary">Cari</button>
+                <button type="submit" class="btn btn-dark">Cari</button>
             </div>
         </div>
     </form>
@@ -20,11 +20,10 @@
             <tr>
                 <th>No</th>
                 <th>Sepatu</th>
-                <th>Harga</th>
-                <th>Kategori</th>
-                <th>Merek</th>
+                <th>Brand</th>
+                <th>Harga Satuan</th>
                 <th>Ukuran</th>
-                <th>Jumlah</th>
+                <th>quantity</th>
                 <th>Tanggal</th>
                 <th>Total Harga</th>
                 @can('admin')
@@ -37,18 +36,17 @@
             @foreach ($incomes as $data)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $data->nama }}</td>
-                <td>Rp {{ number_format($data->harga, 0, ',', '.') }}</td>
-                <td>{{ $data->kategori->nama }}</td>
-                <td>{{ $data->merek->nama_brand }}</td>
-                <td>{{ $data->size->size }}</td>
-                <td>{{ $data->jumlah }}</td>
+                <td>{{ $data->sepatus->nama }}</td>
+                <td>{{ $data->sepatus->brands->nama_brand }}</td>
+                <td>Rp {{ number_format($data->sepatus->harga, 0, ',', '.') }}</td>
+                <td>{{ $data->size_id }}</td>
+                <td>{{ $data->quantity }}</td>
                 <td>{{ $data->tanggal ? $data->tanggal->format('d-m-Y') : '-' }}</td>
-                <td>Rp {{ number_format($data->total, 0, ',', '.') }}</td>
+                <td>Rp {{ number_format($data->total_harga, 0, ',', '.') }}</td>
 
                 @can('admin')
                 <td class="text-nowrap">
-                    <a href="/dashboard-income/{{$data->id}}/edit" class="btn btn-warning">Edit</a>
+                    <a href="/dashboard-income/{{$data->id}}/edit" class="btn btn-warning btn-sm">Edit</a>
                     <form action="/dashboard-income/{{$data->id}}" method="post" class="d-inline">
                         @method('DELETE')
                         @csrf
@@ -62,7 +60,7 @@
         </tbody>
         <tfoot>
             <tr class="table-secondary">
-                <td colspan="8" class="text-start fw-bold">Total Pemasukan:</td>
+                <td colspan="7" class="text-start fw-bold">Total Pemasukan:</td>
 
                 <td class="fw-bold">Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</td>
             </tr>

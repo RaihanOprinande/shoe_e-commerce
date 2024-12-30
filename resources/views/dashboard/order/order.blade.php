@@ -19,10 +19,6 @@
         <td>{{ $order->customers->name }}</td>
         <td>{{ number_format($order->sepatus->harga * $order->quantity + $order->pengambilans->ongkir, 0, ',', '.') }}</td>
         <td>{{ $order->tanggal }}</td>
-        {{-- <td>{{ $order->merek->nama_brand }}</td> --}}
-        {{-- <td>{{ $order->size->size }}</td> --}}
-        {{-- <td>{{ $order->jumlah }}</td> --}}
-        {{-- <td>{{ number_format($order->total, 0, ',', '.') }}</td> --}}
         <td>
             @if($order->bukti_transaksi)
                 <img src="{{ asset('storage/' . $order->bukti_transaksi) }}" alt="Bukti Pembayaran" style="width: 100px; height: auto; cursor: pointer;"
@@ -48,10 +44,13 @@
         </td>
         <td>
             <span class="badge {{ $order->status == 'pending' ? 'bg-warning' : 'bg-success' }}">
-                {{ $order->status == 'pending' ? 'Pesanan Sedang Dibuat' : 'Pesanan Sukses' }}
+                {{ $order->status == 'pending' ? 'Prossesing' : 'Sukses' }}
             </span>
         </td>
         <td>
+            <a href="/dashboard-order/{{ $order->id }}" class="btn btn-info btn-sm text-white">
+                Detail
+            </a>
             <form action="{{ route('orders.confirm', $order->id) }}" method="POST" class="d-inline">
                 @csrf
                 @method('PUT')

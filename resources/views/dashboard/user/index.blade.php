@@ -11,14 +11,6 @@
   @endif
 <a href="/dashboard-user/create" class="btn btn-primary mb-2">Create User</a>
 
-<div class="row mb-3 mt-4">
-    <div class="col-md-4">
-        <form class="d-flex" role="search" action="{{ url('/dshbrd-usr') }}" method="GET">
-            <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-primary" type="submit">Search</button>
-        </form>
-    </div>
-</div>
 <table class="table table-bordered">
     <tr>
         <th>No</th>
@@ -38,7 +30,7 @@
 
         <td class="text-nowrap">
             <a href="/dashboard-user/{{$user->id}}" class="btn btn-success btn-sm" title="lihat detail">Detail</a>
-            <a href="/dashboard-user/{{$user->id}}/edit" class="btn btn-warning">Edit</a>
+            <a href="/dashboard-user/{{$user->id}}/edit" class="btn btn-warning btn-sm">Edit</a>
             <form action="/dashboard-user/{{$user->id}}" method="post" class="d-inline">
                 @method('DELETE')
                 @csrf

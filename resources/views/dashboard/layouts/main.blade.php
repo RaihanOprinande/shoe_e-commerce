@@ -67,6 +67,16 @@
                 margin-bottom: 20px;
             }
         }
+        .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px; /* Adjust the width as needed */
+    background-color: #f8f9fa; /* Adjust the background color as needed */
+    overflow-y: auto;
+    padding-top: 20px;
+}
     </style>
 
     <!-- Custom styles for this template -->

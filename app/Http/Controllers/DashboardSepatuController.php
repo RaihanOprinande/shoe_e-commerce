@@ -16,9 +16,9 @@ class DashboardSepatuController extends Controller
 {
     public function index()
     {
-        $sepatus=Sepatu::latest();
+        $sepatus=Sepatu::latest()->paginate(10);
          // $sepatus=Sepatu::latest()->paginate(10);
-         return view('dashboard.sepatu.index',['sepatus'=>$sepatus->paginate(10)]);
+         return view('dashboard.sepatu.index',compact('sepatus'));
     }
     public function create(){
         $kategoris = Kategori::all();

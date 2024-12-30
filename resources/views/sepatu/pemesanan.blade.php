@@ -107,9 +107,9 @@
                     @csrf
                     {{-- Data tersembunyi untuk form --}}
                     <input type="hidden" name="sepatu_id" value="{{ $cart->sepatu_id }}">
-                    <input type="hidden" name="size" value="{{ $cart->size_id }}">
+                    <input type="hidden" name="size_id" value="{{ $cart->size_id }}">
                     <input type="hidden" name="quantity" value="{{ $cart->quantity }}">
-                    <input type="hidden" name="pengambilan_id" id="hiddenPengambilanId" value="{{ $pengambilan->id }}">
+                    {{-- <input type="hidden" name="pengambilan_id" value="{{ $pengambilan->id }}"> --}}
 
 
                     {{-- Tombol aksi --}}

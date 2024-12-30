@@ -8,38 +8,30 @@ use Illuminate\Database\Eloquent\Model;
 class Pemasukan extends Model
 {
     use HasFactory;
-    protected $table = 'incomes';
+    protected $table = 'pemasukans';
 
     // Tentukan kolom-kolom yang bisa diisi secara massal
     protected $fillable = [
-        'nama',
-        'harga',
-        'kategori_id',
-        'bukti',
-        'merek_id',
+        'sepatu_id',
         'size_id',
-        'jumlah',
-        'total',
-        'tanggal'
+        'total_harga',
+        'quantity',
+        'tanggal',
+        'harga',
     ];
     protected $casts = [
         'tanggal' => 'datetime',  // pastikan kolom tanggal diperlakukan sebagai Carbon instance
     ];
 
     // Relasi dengan model Sepatu
-    public function sepatu()
+    public function sepatus()
     {
-        return $this->belongsTo(Sepatu::class);
+        return $this->belongsTo(Sepatu::class, 'sepatu_id');
     }
-    public function kategori()
-    {
-        return $this->belongsTo(Kategori::class);
+    public function sizes(){
+        return $this->belongsTo(Size::class,'size_id');
     }
-
-    public function merek(){
-        return $this->belongsTo(Brands::class);
-    }
-    public function size(){
-        return $this->belongsTo(Size::class);
+    public function pengambilans(){
+        return $this->belongsTo(Pengambilan::class,'pengambilan_id');
     }
 }

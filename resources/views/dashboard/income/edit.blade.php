@@ -14,19 +14,19 @@
     @csrf
 
     <div class="mb-3">
-        <label for="nama" class="form-label">Nama</label>
-        <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" id="nama" value="{{ old('nama',$incomes->nama) }}">
+        <label for="nama" class="form-label">sepatu</label>
+        <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" id="nama" value="{{ old('nama',$incomes->sepatus->nama) }} "disabled>
         @error('nama')
            <div class="invalid-feedback">
             {{ $message }}
            </div>
          @enderror
-      </div>
+      </div >
 
       <div class="mb-3">
-        <label for="harga" class="form-label">Harga</label>
-        <input type="text" class="form-control @error('harga') is-invalid @enderror" name="harga" id="harga" value="{{ old('harga',$incomes->harga) }}">
-        @error('harga')
+        <label for="brand" class="form-label">Brand</label>
+        <input type="text" class="form-control @error('brand') is-invalid @enderror" name="brand" id="brand" value="{{ old('brand',$incomes->sepatus->brands->nama_brand) }}" disabled>
+        @error('brand')
            <div class="invalid-feedback">
             {{ $message }}
            </div>
@@ -34,65 +34,37 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Kategori</label>
-        <select name="kategori_id" class="form-select @error('kategori_id') is-invalid
-
-        @enderror" >
-            <option value="">Pilih Kategori</option>
-            @foreach ($kategoris as $kategori)
-            @if (old('kategori_id',$incomes->kategori_id) == $kategori->id)
-            <option value="{{ $kategori->id}}" selected>{{ $kategori->nama}}</option>
-            @else
-            <option value="{{ $kategori->id}}">{{ $kategori->nama}}</option>
-            @endif
-
-            @endforeach
-        </select>
+        <label for="harga" class="form-label">harga Satuan</label>
+        <input type="text" class="form-control @error('harga') is-invalid @enderror" name="harga" id="harga" value="{{ old('harga',$incomes->sepatus->harga) }}" disabled>
+        @error('brand')
+           <div class="invalid-feedback">
+            {{ $message }}
+           </div>
+         @enderror
       </div>
+
       <div class="mb-3">
-        <label class="form-label">Merek</label>
-        <select name="merek_id" class="form-select @error('merek_id') is-invalid
-
-        @enderror" >
-            <option value="">Pilih Merek</option>
-            @foreach ($mereks as $merek)
-            @if (old('brands_id',$incomes->merek_id) == $merek->id)
-            <option value="{{ $merek->id}}" selected>{{ $merek->nama_brand}}</option>
-            @else
-            <option value="{{ $merek->id}}">{{ $merek->nama_brand}}</option>
-            @endif
-
-            @endforeach
-        </select>
+        <label for="size" class="form-label">Size</label>
+        <input type="text" class="form-control @error('size') is-invalid @enderror" name="size" id="size" value="{{ old('size',$incomes->size_id) }}" disabled>
+        @error('brand')
+           <div class="invalid-feedback">
+            {{ $message }}
+           </div>
+         @enderror
       </div>
-      <div class="mb-3">
-        <label class="form-label">Size</label>
-        <select name="size_id" class="form-select @error('size_id') is-invalid
 
-        @enderror" >
-            <option value="">Pilih Size</option>
-            @foreach ($sizes as $size)
-            @if (old('size_id',$incomes->size_id) == $size->id)
-            <option value="{{ $size->id}}" selected>{{ $size->size}}</option>
-            @else
-            <option value="{{ $size->id}}">{{ $size->size}}</option>
-            @endif
-
-            @endforeach
-        </select>
-      </div>
       <div class="mb-3">
-        <label for="jumlah" class="form-label">Jumlah</label>
-        <input type="text" class="form-control @error('jumlah') is-invalid @enderror" name="jumlah" id="jumlah" value="{{ old('jumlah',$incomes->jumlah) }}">
-        @error('jumlah')
+        <label for="quantity" class="form-label">Quantity</label>
+        <input type="text" class="form-control @error('quantity') is-invalid @enderror" name="quantity" id="quantity" value="{{ old('quantity',$incomes->quantity) }}"disabled >
+        @error('quantity')
            <div class="invalid-feedback">
             {{ $message }}
            </div>
          @enderror
       </div>
       <div class="mb-3">
-        <label for="total" class="form-label">Total</label>
-        <input type="text" class="form-control @error('total') is-invalid @enderror" name="total" id="total" value="{{ old('total',$incomes->total) }}">
+        <label for="total_harga" class="form-label">Total</label>
+        <input type="text" class="form-control @error('total_harga') is-invalid @enderror" name="total_harga" id="total_harga" value="{{ old('total_harga',$incomes->total_harga) }}">
         @error('total')
            <div class="invalid-feedback">
             {{ $message }}
@@ -101,19 +73,13 @@
       </div>
       <div class="mb-3">
         <label for="tanggal" class="form-label">Tanggal</label>
-        <input type="date" class="form-control @error('tanggal') is-invalid @enderror" name="tanggal" id="tanggal" value="{{ old('tanggal',$incomes->tanggal) }}">
-        @error('tanggal')
-        <div class="invalid-feedback">
+        <input type="text" class="form-control @error('tanggal') is-invalid @enderror" name="tanggal" id="tanggal" value="{{ old('tanggal',$incomes->tanggal) }}"disabled>
+        @error('total')
+           <div class="invalid-feedback">
             {{ $message }}
-        </div>
-        @enderror
-    </div>
-
-
-
-
-
-
+           </div>
+         @enderror
+      </div>
 
       <div class="mb-3">
 

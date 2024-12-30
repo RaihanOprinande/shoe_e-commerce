@@ -25,7 +25,7 @@ class ListController extends Controller
 
         // Lakukan pencarian jika search terisi
         $sepatus = Sepatu::where('nama', 'like', "%{$search}%")
-                         ->orWhere('kategori', 'like', "%{$search}%")
+                         ->orWhere('kategori_id', 'like', "%{$search}%")
                          ->get();
 
         // Tampilkan halaman dengan pesan jika data tidak ditemukan

@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Order;
 
 class DashboardAdminController extends Controller
 {
     public function Dashboard()
     {
-        return view('dashboard.Welcome');
+        $income = [1000, 2000, 1500, 3000, 2500, 4000, 3500];
+        $outcome = [500, 1000, 750, 1500, 1250, 2000, 1750];
+        $labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+        return view('dashboard.Welcome',compact('income', 'outcome', 'labels'));
     }
 
     public function index()
@@ -27,6 +31,7 @@ class DashboardAdminController extends Controller
         // }
         return view('dashboard.user.index', ['users' =>$users->paginate(30)]);
 }
+
 
     /**
      * Show the form for creating a new resource.

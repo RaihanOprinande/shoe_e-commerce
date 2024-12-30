@@ -11,31 +11,11 @@ use Illuminate\Http\Request;
 
 class DashboardIncomesController extends Controller
 {
-    public function show(Request $request)
-    {
-        // Ambil data pemasukan, filter berdasarkan tanggal jika ada
-        $pemasukans = Pemasukan::query();
 
-        if ($request->has('tanggal') && $request->tanggal) {
-            $pemasukans->whereDate('tanggal', $request->tanggal);
-        }
-
-        $pemasukans = $pemasukans->get();  // Ambil data pemasukan
-        $totalPemasukan = Pemasukan::sum('total');  // Total pemasukan
-
-        // Buat PDF dengan data yang sudah diproses
-        // $pdf = Pdf::loadView('dashboard.income.cetak_pdf', [
-        //     'pemasukans' => $pemasukans,
-        //     'totalPemasukan' => $totalPemasukan
-        // ]);
-
-        // Stream file PDF (langsung download)
-        // return $pdf->stream('laporan-data-pemasukan.pdf');
-    }
     public function index(Request $request)
 {
     // Inisialisasi query untuk model Pemasukan
-    $query = Pemasukan::latest();
+    $query = Pemasukan::with('sepatus','sizes')->latest();
 
     if ($request->filled('tanggal')) {
         $query->whereDate('tanggal', $request->tanggal);
@@ -45,7 +25,7 @@ class DashboardIncomesController extends Controller
     $incomes = $query->paginate(10);
 
     // Menghitung total pemasukan
-    $totalPemasukan = $query->sum('total');
+    $totalPemasukan = $query->sum('total_harga');
 
     // Mengembalikan view dengan data yang diperlukan
     return view('dashboard.income.income', [
@@ -59,33 +39,23 @@ class DashboardIncomesController extends Controller
      {
 
         $incomes = Pemasukan::find($id);
-        $kategoris = Kategori::all();
-        // $gambars = sepatui::all();
-        $mereks = Brands::all();
-        // $colors = Color::all();
-        $sizes = Size::all();
 
-        return view('dashboard.income.edit', compact('incomes','kategoris','mereks','sizes'));
+        return view('dashboard.income.edit', compact('incomes'));
      }
 
      public function update(Request $request,string $id){
         $validated = $request->validate([
-         'nama' => 'required',
-         'harga' => 'required',
-         'kategori_id' => 'required',
-         'bukti' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-         'merek_id' => 'required',
-         'size_id' => 'required',
-         'jumlah' => 'required',
-         'total' => 'required',
-         'tanggal' => 'required',
+         'total_harga' => 'required',
+        //  'quantity' => 'nullable',
+        //  'sepatu_id' => 'nullable',
+        //  'size_id' => 'nullable',
+        //  'tanggal' => 'nullable',
         ]);
 
-        if ($request->file('gambar_sepatu')) {
-            $validated['gambar_sepatu'] = $request->file('gambar_sepatu')->store('images','public');
-        }
 
-           Pemasukan::where('id', $id)->update($validated);
+           $pengeluaran = Pemasukan::where('id', $id);
+
+           $pengeluaran->update($validated);
            return redirect('dashboard-income')->with('pesan','Data berhasil diubah');
      }
 

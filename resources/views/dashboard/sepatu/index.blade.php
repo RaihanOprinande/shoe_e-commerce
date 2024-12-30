@@ -5,7 +5,7 @@
 
   @if (session('pesan'))
   <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <strong>Hei Tayo</strong> {{session('pesan')}}
+     {{session('pesan')}}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
   @endif
@@ -46,7 +46,7 @@
 
         <td class="text-nowrap">
             <a href="/dashboard-sepatu/{{$sepatu->id}}" class="btn btn-success btn-sm" title="lihat detail">Detail</a>
-            <a href="/dashboard-sepatu/{{$sepatu->id}}/edit" class="btn btn-warning">Edit</a>
+            <a href="/dashboard-sepatu/{{$sepatu->id}}/edit" class="btn btn-warning btn-sm">Edit</a>
             <form action="/dashboard-sepatu/{{$sepatu->id}}" method="post" class="d-inline">
                 @method('DELETE')
                 @csrf

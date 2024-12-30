@@ -76,6 +76,7 @@ class SepatuController extends Controller
     {
         Cart::where('customer_id',Auth::guard('customers')->id())->delete();
 
+
         return redirect('home')->with('success', 'Data berhasil dihapus');
     }
 
@@ -111,14 +112,23 @@ class SepatuController extends Controller
         'bukti.required' => 'Harap upload bukti pembayaran.',
         'bukti.image' => 'File yang diupload harus berupa gambar.',
         'bukti.mimes' => 'Hanya diperbolehkan format: jpeg, png, jpg.',
-        'bukti.max' => 'Ukuran gambar maksimal 2MB.',
+        'bukti.max' => 'Ukuran gambar maksimal 5MB.',
+        'sepatu_id.required' => 'Sepatu ID diperlukan.',
+        'size_id.required' => 'Size ID diperlukan.',
+        'quantity.required' => 'Jumlah diperlukan.',
+        'quantity.integer' => 'Jumlah harus berupa angka.',
+        'quantity.min' => 'Jumlah minimal adalah 1.',
     ]);
 
 
 
-    // Mengambil data sepatu beserta warna dan ukuran
-    $sepatu = Sepatu::with(['colors', 'sizes'])->find($request->sepatu_id);
-    // $totalHarga = $sepatu->harga * $request->jumlah;
+    // ukuran
+    $stock = Sepatu_size::where('sepatu_id', $request->sepatu_id)
+    ->where('size_id', $request->size_id)
+    ->first();
+
+        $stock->quantity -= $request->quantity ;
+        $stock->save();
 
 
     // Menyimpan bukti bukti pembayaran
@@ -128,7 +138,7 @@ class SepatuController extends Controller
     Order::create([
         'customer_id' => Auth::guard('customers')->id(),
         'sepatu_id' => $request->sepatu_id,
-        'size_id' => $request->size,
+        'size_id' => $request->size_id,
         'tanggal'=>now(),
         'pengambilan_id' => $request->pengambilan_id,
         'quantity' => $request->quantity,
@@ -142,31 +152,7 @@ class SepatuController extends Controller
 
     }
 
-public function confirmOrder($id)
-{
-    // Temukan pesanan berdasarkan ID
-    $order = Order::findOrFail($id);
 
-    // Update status pesanan menjadi "diproses"
-    $order->status = 'processed';
-    $order->save();
-
-    // Simpan data ke tabel pemasukan
-    Pemasukan::create([
-        'nama' => $order->nama,
-        'harga' => $order->harga,
-        'kategori_id' => $order->kategori_id,
-        'bukti' => $order->bukti,
-        'merek_id' => $order->merek_id,
-        'size_id' => $order->size_id,
-        'jumlah' => $order->jumlah,
-        'total' => $order->total,
-        'tanggal'=>now(),
-    ]);
-
-    // Redirect dengan pesan sukses
-    return redirect()->back()->with('success', 'Status pesanan berhasil diperbarui dan data telah disimpan ke tabel pemasukan.');
-}
 
 
 
