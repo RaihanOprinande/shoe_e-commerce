@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('dashboard.layouts.main')
 
 @section('content')
 
@@ -14,6 +14,7 @@
                 <th>Size</th>
                 <th>Quantity</th>
                 <th>Tanggal</th>
+                <th>Tipe Pengambilan</th>
                 <th>Status pembelian</th>
                 <th>Total Harga</th>
             </tr>
@@ -25,6 +26,7 @@
                 <td>{{ $orders->sizes->size }}</td>
                 <td>{{ $orders->quantity }}</td>
                 <td>{{ $orders->tanggal }}</td>
+                <td>{{ $orders->pengambilans->metode }}</td>
                 <td>{{ $orders->status }}</td>
                 <td>Rp {{ number_format($orders->sepatus->harga * $orders->quantity + $orders->pengambilans->ongkir, 0, ',', '.') }}</td>
             </tr>
@@ -49,7 +51,23 @@
                 <img src="{{ asset('storage/' . $orders->bukti_transaksi) }}" alt="Bukti Pembayaran" style=" height: auto;">
             </div>
             <div class="col">
-                
+                <div class="form-group">
+                    <label for="status">Select Status:</label>
+                    <select name="status" id="status" class="form-control" required>
+                        <option value="">-- Status --</option>
+                            <option value="diproses">Diproses</option>
+                            <option value="dikirim">Dikirim</option>
+                            <option value="pending">Sukses</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <form action=" /update-status/{{ $orders->id }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('PUT')
+                    <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Konfirmasi pesanan ini?')">Konfirmasi</button>
+                </form>
             </div>
         </div>
 

@@ -39,7 +39,7 @@
                 <td>{{ $data->sepatus->nama }}</td>
                 <td>{{ $data->sepatus->brands->nama_brand }}</td>
                 <td>Rp {{ number_format($data->sepatus->harga, 0, ',', '.') }}</td>
-                <td>{{ $data->size_id }}</td>
+                <td>{{ $data->sizes->size }}</td>
                 <td>{{ $data->quantity }}</td>
                 <td>{{ $data->tanggal ? $data->tanggal->format('d-m-Y') : '-' }}</td>
                 <td>Rp {{ number_format($data->total_harga, 0, ',', '.') }}</td>

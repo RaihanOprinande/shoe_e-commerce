@@ -27,31 +27,40 @@
         </div>
         {{-- KATEGORI --}}
     <div class="kategori">
+        <div class="row">
+            <div class="col-6">
+                <div class="men me-4">
+                    <div class="isi-men">
+                        <div class="gambar-men ">
+                            <a href="{{ route('sepatu.kategori', ['kategori' => '2']) }}">
+                                <img src="/images/men-model.jpg" alt="">
+                                <div class="text-kategori">
+                                    view men's shoes
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="women">
+                    <div class="isi-women">
+                        <div class="gambar-women">
+                            <a href="{{ route('sepatu.kategori', ['kategori' => '1']) }}">
+                                <img src="/images/crocs.jpg" alt="">
+                                <div class="text-kategori">
+                                    view women's shoes
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="sex">
-            <div class="men me-4">
-                <div class="isi-men">
-                    <div class="gambar-men ">
-                        <a href="{{ route('sepatu.kategori', ['kategori' => '2']) }}">
-                            <img src="/images/hiroyuki_Sanada.jpg" alt="">
-                            <div class="text-kategori">
-                                view men's shoes
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="women">
-                <div class="isi-women">
-                    <div class="gambar-women">
-                        <a href="{{ route('sepatu.kategori', ['kategori' => '1']) }}">
-                            <img src="/images/miki_matsubara.jpeg" alt="">
-                            <div class="text-kategori">
-                                view women's shoes
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
+
+
         </div>
     </div>
 
@@ -73,29 +82,9 @@
         </div>
 
 
-        <h1 class="text-center mb-5">Our List of shoes</h1>
 
-        {{-- <a href="{{ url('/list') }}" class="float-right text-dark font-weight-bold">Show All</a> --}}
-
-        <!-- LIST SEPATU -->
-        {{-- <div class="row mt-5">
-            @foreach($sepatus->take(4) as $sepatu) <!-- Mengambil 4 item pertama -->
-                <div class="col-md-3 col-sm-6 mb-4" {{ $sepatu->stock > 0 ? '' : 'disabled-card' }}>
-                    <div class="card h-100" >
-                        <a href="{{ route('sepatu.detail', ['id' => $sepatu->id]) }}">
-                            <img src="{{ asset('images/' . $sepatu-> gambar_sepatu) }}" class="card-img-top" alt="{{ $sepatu-> nama }}">
-                            <div class="card-body" >
-                                <h5 class="card-title">{{ $sepatu->nama }}</h5>
-                                <p class="card-text">{{ $sepatu-> kategori->nama }}
-                                </p></p>
-                                <p>Rp {{ number_format($sepatu->harga, 0, ',', '.') }}</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            @endforeach
-        </div> --}}
         <div class="list-sepatu">
+            <h1 class="text-center mb-5">Our List of shoes</h1>
             <div class="konten-list ">
                 @foreach ($sepatus->take(5) as $sepatu)
                 <a href="/sepatu/{{ $sepatu->id }}">

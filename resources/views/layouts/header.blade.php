@@ -25,18 +25,16 @@
             <a class="nav-link active" href="/aboutus">About Us</a>
           </li>
         </ul>
-        <ul class="navbar-nav">
-
-            <form action="/logoutpelanggan" method="POST">
-                @csrf
-                <button class="nav-link text-black" type="submit">Log Out</button>
-
-            </form>
-           </ul>
         <form class="d-flex" role="search" action="{{ url('/list-search') }}" method="GET">
             <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-search btn-outline-primary" type="submit">Search</button>
+            <button class="btn btn-search btn-outline-dark" type="submit">Search</button>
         </form>
+        <ul class="navbar-nav ms-5 me-3">
+            <form action="/logoutpelanggan" method="POST">
+                @csrf
+                <button class="btn btn-danger nav-link text-black" type="submit">Log Out</button>
+            </form>
+        </ul>
       </div>
     </div>
   </nav>

@@ -12,11 +12,11 @@
 <a href="/dashboard-user/create" class="btn btn-primary mb-2">Create User</a>
 
 <table class="table table-bordered">
-    <tr>
+    <tr class="table-dark">
         <th>No</th>
         <th>Nama</th>
         <th>Email</th>
-
+        <th>Aksi</th>
 
     </tr>
     @foreach ($users as $user)

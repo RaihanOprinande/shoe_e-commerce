@@ -92,6 +92,12 @@
                         Pengambilan
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="/dashboard-customer">
+                        <i class="bi bi-person-circle"></i>
+                        Pelanggan
+                    </a>
+                </li>
 
                 <!-- Dropdown untuk Keuangan -->
                 <li class="nav-item">
@@ -114,7 +120,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center gap-2" href="/dashboard-pengeluarans">
+                                <a class="nav-link d-flex align-items-center gap-2" href="/dashboard-kategori-pengeluaran">
                                     <i class="bi bi-graph-down-arrow"></i>
                                     Kategori Pengeluaran
                                 </a>

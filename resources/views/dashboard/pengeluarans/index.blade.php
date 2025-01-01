@@ -45,7 +45,9 @@
             <th>Keterangan</th>
             <th>Tanggal</th>
             <th>Harga</th>
+            @can('admin')
             <th>Aksi</th>
+            @endcan
         </tr>
     </thead>
     <tbody>
@@ -56,6 +58,7 @@
             <td>{{ $pengeluaran->keterangan }}</td>
             <td>{{ $pengeluaran->date }}</td>
             <td>Rp {{ number_format($pengeluaran->uang, 0, ',', '.') }}</td>
+            @can('admin')
             <td class="text-nowrap">
 
                 <a href="/dashboard-pengeluarans/{{ $pengeluaran->id }}/edit" class="btn btn-warning">Edit</a>
@@ -65,6 +68,8 @@
                     <button class="btn btn-danger" onclick="return confirm('Yakin akan menghapus data ini?')">Hapus</button>
                 </form>
             </td>
+            @endcan
+
         </tr>
         @endforeach
     </tbody>

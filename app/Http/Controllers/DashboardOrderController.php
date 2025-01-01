@@ -14,12 +14,12 @@ class DashboardOrderController extends Controller
     public function index()
     {
 
-        $orders=Order::with('customers','sepatus','sizes','pengambilans')->latest();
+        $orders=Order::with('customers','sepatus','sizes','pengambilans')->orderByRaw("CASE WHEN status != 'selesai' THEN 0 ELSE 1 END, status ASC")->paginate(10);
         $transactions = TransactionDetail::with('sepatus','sizes','customers')->where('customer_id',Auth::guard('customers')->id())->get();
         $totalHarga = $transactions->map(function($transactions) {
             return ($transactions->quantity * $transactions->sepatus->harga)+$transactions->pengambilan->ongkir;
         })->sum();
-         return view('dashboard.order.order',['orders'=>$orders->paginate(10),'totalHarga'=>$totalHarga]);
+         return view('dashboard.order.order',['orders'=>$orders,'totalHarga'=>$totalHarga]);
     }
 
     public function store(Request $request){
@@ -57,7 +57,7 @@ class DashboardOrderController extends Controller
     $order = Order::with('sepatus','sizes')->findOrFail($id);
     $total_harga = $order->sepatus->harga * $order->quantity + $order->pengambilans->ongkir;
     // Update status pesanan menjadi "diproses"
-    $order->status = 'processed';
+    $order->status = 'selesai';
     $order->save();
 
     // Simpan data ke tabel pemasukan
@@ -77,6 +77,23 @@ class DashboardOrderController extends Controller
     {
         $orders = Order::with('customers','sepatus','sizes','pengambilans')->findOrFail($id);
         return view('dashboard.order.show',compact('orders'));
+    }
+
+    public function status(Request $request, String $id){
+        $validated = $request->validate([
+            'status' => 'required',
+           //  'quantity' => 'nullable',
+           //  'sepatu_id' => 'nullable',
+           //  'size_id' => 'nullable',
+           //  'tanggal' => 'nullable',
+           ]);
+
+        $order = Order::where('id', $id);
+
+        $order->update($validated);
+
+
+        return redirect('dashboard-order')->with('pesan','Status berhasil diubah');
     }
 
 

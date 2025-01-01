@@ -147,7 +147,7 @@
                 <div class="footer-left">
                     <h2>Alamat</h2>
                     {{-- <p>Influence Marketing Agency</p> --}}
-                    <p>JL. Jendral Sudirman, Pasar Lepin</p>
+                    <p>JL. Jendral Sudirman, Pasar Lepin</p>
                     <p><i class="fa fa-map-marker"></i> Dumai, Indonesia</p>
                 </div>
 
@@ -155,7 +155,7 @@
                     <div class="footer-section">
                         <h4>Navigation</h4>
                         <ul>
-                            <li><a href="/index">Home</a></li>
+                            <li><a href="/home">Home</a></li>
                             <li><a href="{{ route('sepatu.kategori', ['kategori' => 'pria']) }}">Men</a></li>
                             <li><a href="{{ route('sepatu.kategori', ['kategori' => 'wanita']) }}">Women</a></li>
                             <li><a href="/aboutus">About us</a></li>
@@ -165,10 +165,10 @@
                     <div class="footer-section">
                         <h4>Quick Link</h4>
                         <ul>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">FAQs</a></li>
-                            <li><a href="#">Booking</a></li>
-                            <li><a href="#">Pages</a></li>
+                            <li><a href="/aboutus">Contact Us</a></li>
+                            <li><a href="/wishlist">wishlist</a></li>
+                            {{-- <li><a href="#">Booking</a></li> --}}
+                            {{-- <li><a href="#">Pages</a></li> --}}
                         </ul>
                     </div>
                 </div>
@@ -177,16 +177,16 @@
                     <div class="footer-section">
                         <h4>Services</h4>
                         <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">404</a></li>
+                            <li><a href="/home">Home</a></li>
+                            <li><a href="/aboutus">Contact</a></li>
+                            {{-- <li><a href="#">Blog</a></li> --}}
+                            {{-- <li><a href="#">404</a></li> --}}
                         </ul>
                     </div>
 
                     <div class="footer-contact">
                         <p><i class="fa fa-phone"></i> (+62) 822 8514 1312</p>
-                        <p><i class="fa fa-envelope"></i> mail@exmaple.id</p>
+                        <p><i class="fa fa-envelope"></i> step.off@gmail.com</p>
                         <div class="social-media">
                             <a href="#"><i class="fa fa-facebook"></i></a>
                             <a href="#"><i class="fa fa-twitter"></i></a>

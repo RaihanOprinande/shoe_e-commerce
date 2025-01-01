@@ -17,7 +17,7 @@
     <tr>
         <td>{{ $orders->firstItem() + $loop->index }}</td>
         <td>{{ $order->customers->name }}</td>
-        <td>{{ number_format($order->sepatus->harga * $order->quantity + $order->pengambilans->ongkir, 0, ',', '.') }}</td>
+        <td>Rp. {{ number_format($order->sepatus->harga * $order->quantity + $order->pengambilans->ongkir, 0, ',', '.') }}</td>
         <td>{{ $order->tanggal }}</td>
         <td>
             @if($order->bukti_transaksi)

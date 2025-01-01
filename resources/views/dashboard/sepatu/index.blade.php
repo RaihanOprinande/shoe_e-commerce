@@ -20,7 +20,7 @@
     </div>
 </div> --}}
 <table class="table table-bordered">
-    <tr>
+    <tr class="table-dark">
         <th>No</th>
         <th>Nama</th>
         <th>Harga</th>

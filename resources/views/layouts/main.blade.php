@@ -8,53 +8,12 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
 
-        /* Menambahkan gaya untuk kontainer */
-
-        .nav-link {
-            position: relative;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .nav-link::after {
-            content: "";
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            width: 0;
-            height: 2px;
-            background-color: black;
-            transition: width 0.3s;
-            transform: translateX(-50%);
-        }
-
-        .nav-link:hover::after {
-            left: 0;
-            transform: translateX(0);
-        }
-        .btn-search{
-            color: black;
-            border-color: black;
-        }
-        .btn-search:hover{
-            color: white;
-            background-color: black;
-            border-color: black
-        }
-        .footer{
-            /* min-height: 10vh; */
-        }
-
-
-    </style>
 </head>
 
 <body>
     <div class="container-fluid">
-        <div class="head mb-2">
+        <div class="head sticky-top">
             @include('layouts.header')
         </div>
         <div class=" main-content">

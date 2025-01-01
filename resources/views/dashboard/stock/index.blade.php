@@ -12,7 +12,7 @@
 <a href="/dashboard-stock/create" class="btn btn-primary mb-2">Add Stock</a>
 
 <table class="table table-bordered">
-    <tr>
+    <tr class="table-dark">
         <th>No</th>
         <th>Kode Sepatu</th>
         <th>Sepatu</th>

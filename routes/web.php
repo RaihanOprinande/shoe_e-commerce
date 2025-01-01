@@ -10,9 +10,10 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardBrandController;
 use App\Http\Controllers\DashboardColorsController;
+use App\Http\Controllers\DashboardCustomerController;
 use App\Http\Controllers\DashboardIncomesController;
+use App\Http\Controllers\DashboardKategoriPengeluaranController;
 use App\Http\Controllers\DashboardSizesController;
-// use App\Http\Controllers\DashboardIncomesController;
 use App\Http\Controllers\DashboardOrderController;
 use App\Http\Controllers\DashboardPengambilanController;
 use App\Http\Controllers\DashboardSepatuSizeController;
@@ -24,42 +25,14 @@ use App\Http\Controllers\LoginPelangganController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\wishlistController;
 use App\Models\TransactionDetail;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
+// Home route
 Route::get('/h', function () {
     return view('home');
 });
 
+// SepatuController routes
 Route::get('/home', [SepatuController::class, 'index'])->name('sepatu.home');
-Route::get('/', [LoginPelangganController::class, 'loginpelanggan']);
-Route::get('/sepatu/{id}', [SepatuController::class, 'show'])->name('sepatu.detail');
-Route::get('/aboutus', [SepatuController::class, 'aboutus']);
-Route::get('/login', [LoginController::class, 'login'])->name('login');
-// Route::get('/loginpelanggan', [LoginPelangganController::class, 'loginpelanggan']);
-// login logout pelanggan
-Route::get('/loginpelanggan', [LoginPelangganController::class, 'loginpelanggan']);
-Route::post('/loginpelanggan',[LoginPelangganController::class,'authenticate']);
-Route::post('/logoutpelanggan',[LoginPelangganController::class,'logout']);
-
-//register pelangggan
-Route::post('/register', [RegisterController::class, 'register'])->name('register');
-
-//register admin
-Route::get('/register', [RegisterController::class, 'index']);
-
-// login logout admin
-Route::post('/login',[LoginController::class,'authenticate']);
-Route::post('/logout',[LoginController::class,'logout']);
-Route::get('/login', [LoginController::class, 'login'])->name('login');
-
-//list sepatu
-Route::get('list',[ListController::class,'index'])->name('sepatu.list');
-Route::get('list-search',[ListController::class,'search']);
-Route::resource('/list',ListController::class);
-Route::get('/merek/{id}/sepatu', [ListController::class, 'sepatuByMerek']);
-
-// sepatu controller
-// Route::get('/', [SepatuController::class, 'index'])->name('sepatu.home');
 Route::get('/sepatu/{id}', [SepatuController::class, 'show'])->name('sepatu.detail');
 Route::get('/aboutus', [SepatuController::class, 'aboutus']);
 Route::post('/pemesanan', [SepatuController::class, 'pemesanan']);
@@ -67,59 +40,87 @@ Route::get('/keranjang', [SepatuController::class, 'keranjang']);
 Route::post('/proses-bayar', [SepatuController::class, 'prosesBayar']);
 Route::post('/clean-cart/{id}', [SepatuController::class, 'cleanCart']);
 Route::resource('/pemesanan/update-customer', SepatuController::class);
-
-//wishlist
-Route::get('/wishlist',[wishlistController::class,'index']);
-Route::post('/wishlist/store',[wishlistController::class,'store']);
-Route::resource('/wishlist',wishlistController::class);
-
-//history order
-Route::get('/history-order',[HistoryOrderController::class,'index']);
-Route::resource('/detail-order',HistoryOrderController::class);
-
-
-
 Route::get('/sepatu/kategori/{kategori}', [SepatuController::class, 'filterByKategori'])->name('sepatu.kategori');
 
-Route::get('/dashboard',[DashboardAdminController::class, 'Dashboard'])->middleware('auth');
-Route::get('dshbrd-spt',[DashboardSepatuController::class,'index'])->middleware(['auth']);
-Route::get('dshbrd-usr',[DashboardAdminController::class,'index'])->middleware(['auth']);
-Route::get('dshbrd-brd',[DashboardBrandController::class,'index'])->middleware(['auth']);
-Route::get('/cart',[cartController::class, 'index']);
-Route::get('/dshbrd-pengambilan',[DashboardPengambilanController::class, 'index'])->middleware(['auth']);
-Route::get('/checkout',[CheckoutController::class,'index']);
+// ListController routes
+Route::get('list', [ListController::class, 'index'])->name('sepatu.list');
+Route::get('list-search', [ListController::class, 'search']);
+Route::resource('/list', ListController::class);
+Route::get('/merek/{id}/sepatu', [ListController::class, 'sepatuByMerek']);
 
-Route::post('/cart/{id}',[cartController::class,'store']);
-Route::post('/checkout/store',[CheckoutController::class,'store']);
-Route::post('/dashboard-order/store',[DashboardOrderController::class,'store']);
+// Login and Register routes
+Route::get('/', [LoginPelangganController::class, 'loginpelanggan']);
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/loginpelanggan', [LoginPelangganController::class, 'loginpelanggan']);
+Route::post('/loginpelanggan', [LoginPelangganController::class, 'authenticate']);
+Route::post('/logoutpelanggan', [LoginPelangganController::class, 'logout']);
+Route::post('/register', [RegisterController::class, 'register'])->name('register');
+Route::get('/register', [RegisterController::class, 'index']);
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout']);
 
+// WishlistController routes
+Route::get('/wishlist', [wishlistController::class, 'index']);
+Route::post('/wishlist/store', [wishlistController::class, 'store']);
+Route::resource('/wishlist', wishlistController::class);
 
+// HistoryOrderController routes
+Route::get('/history-order', [HistoryOrderController::class, 'index']);
+Route::resource('/detail-order', HistoryOrderController::class);
 
-
-
-
-
-Route::resource('/dashboard-sepatu',DashboardSepatuController::class)->middleware(['auth']);
-Route::resource('/dashboard-user',DashboardAdminController::class)->middleware(['auth']);
-Route::resource('/dashboard-brand',DashboardBrandController::class)->middleware(['auth']);
-Route::resource('/dashboard-pengeluarans',DashboardPengeluaransController::class)->middleware(['auth']);
-Route::resource('/dashboard-sizes',DashboardSizesController::class)->middleware(['auth']);
-Route::resource('/dashboard-color',DashboardColorsController::class)->middleware(['auth']);
-Route::resource('/dashboard-order',DashboardOrderController::class)->middleware(['auth']);
-Route::resource('/dashboard-stock',DashboardSepatuSizeController::class)->middleware(['auth']);
-Route::resource('/dashboard/pengambilan',DashboardPengambilanController::class)->middleware(['auth']);
-Route::resource('/cartedit',cartController::class);
-
-
-
+// DashboardOrderController routes
+Route::post('/update-status/{id}', [DashboardOrderController::class, 'status']);
+Route::resource('/dashboard-order', DashboardOrderController::class)->middleware(['auth']);
 Route::put('/dashboard-order/{id}/confirm', [DashboardOrderController::class, 'confirmOrder'])->name('orders.confirm');
-Route::resource('/dashboard-income',DashboardIncomesController::class)->middleware(['auth']);
+Route::post('/dashboard-order/store', [DashboardOrderController::class, 'store']);
 
+// DashboardPengambilanController routes
+Route::resource('/dashboard/pengambilan', DashboardPengambilanController::class)->middleware(['auth']);
+Route::get('/dshbrd-pengambilan', [DashboardPengambilanController::class, 'index'])->middleware(['auth']);
 
+// DashboardAdminController routes
+Route::get('/dashboard', [DashboardAdminController::class, 'Dashboard'])->middleware('auth');
+Route::get('dshbrd-usr', [DashboardAdminController::class, 'index'])->middleware(['auth']);
+Route::resource('/dashboard-user', DashboardAdminController::class)->middleware(['auth']);
 
-// Route untuk cetak PDF
-Route::get('/dashboard-income/cetak-pdf', [DashboardIncomesController::class, 'show'])->name('incomes.cetak-pdf');
+// DashboardSepatuController routes
+Route::get('dshbrd-spt', [DashboardSepatuController::class, 'index'])->middleware(['auth']);
+Route::resource('/dashboard-sepatu', DashboardSepatuController::class)->middleware(['auth']);
+
+// DashboardBrandController routes
+Route::get('dshbrd-brd', [DashboardBrandController::class, 'index'])->middleware(['auth']);
+Route::resource('/dashboard-brand', DashboardBrandController::class)->middleware(['auth']);
+
+// DashboardPengeluaransController routes
+Route::resource('/dashboard-pengeluarans', DashboardPengeluaransController::class)->middleware(['auth']);
 Route::get('/dashboard-pengeluarans/cetak-pdf', [DashboardPengeluaransController::class, 'show']);
 
+// DashboardIncomesController routes
+Route::resource('/dashboard-income', DashboardIncomesController::class)->middleware(['auth']);
+Route::get('/dashboard-income/cetak-pdf', [DashboardIncomesController::class, 'show'])->name('incomes.cetak-pdf');
 
+// DashboardSizesController routes
+Route::resource('/dashboard-sizes', DashboardSizesController::class)->middleware(['auth']);
 
+// DashboardColorsController routes
+Route::resource('/dashboard-color', DashboardColorsController::class)->middleware(['auth']);
+
+// DashboardSepatuSizeController routes
+Route::resource('/dashboard-stock', DashboardSepatuSizeController::class)->middleware(['auth']);
+
+// CartController routes
+Route::get('/cart', [cartController::class, 'index']);
+Route::post('/cart/{id}', [cartController::class, 'store']);
+Route::resource('/cartedit', cartController::class);
+
+// CheckoutController routes
+Route::get('/checkout', [CheckoutController::class, 'index']);
+Route::post('/checkout/store', [CheckoutController::class, 'store']);
+
+// Kategori Pengeluaran
+Route::get('/dashboard-kategori-pengeluaran', [DashboardKategoriPengeluaranController::class, 'index'])->middleware(['auth']);
+Route::resource('/dashboard-kategori-pengeluaran', DashboardKategoriPengeluaranController::class)->middleware(['auth']);
+
+//Customer
+Route::get('/dashboard-customer', [DashboardCustomerController::class, 'index'])->middleware(['auth']);
+Route::resource('/dashboard-customer', DashboardCustomerController::class)->middleware(['auth']);
