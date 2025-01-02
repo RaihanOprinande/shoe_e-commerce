@@ -124,6 +124,7 @@
     </style>
 </head>
 <body>
+
 <form action="/pemesanan" method="POST">
         @csrf
     <div class="container">
@@ -146,9 +147,11 @@
                 <input type="radio" name="size_id" id="size{{ $size->id }}" value="{{ $size->id }}" {{ $size->pivot->quantity == 0 ? 'disabled' : '' }}>
                 <label for="size{{ $size->id }}">{{ $size->size }} ({{ $size->pivot->quantity }})</label>
                 @endforeach
+                @error('size_id')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
-            <!-- Color Selection -->
 
 
             <!-- Quantity Selection -->
@@ -159,6 +162,9 @@
                     <input type="text" id="quantity" name="quantity" value="1" readonly>
                     <button type="button" onclick="increaseQuantity()" class="quantity-btn">+</button>
                 </div>
+                @error('quantity')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
             </div>
 
             <!-- Add to Bag Button -->
@@ -179,6 +185,11 @@
                     <input type="hidden" name="sepatu_id" value="{{ $sepatu->id }}">
                     <button class="btn btn-sm" type="submit">Add to Wishlist</button>
                 </form>
+                @if (session('pesan'))
+                <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+                   {{session('pesan')}}
+                </div>
+                @endif
             </div>
         </div>
     </div>

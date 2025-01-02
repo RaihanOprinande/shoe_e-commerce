@@ -48,6 +48,34 @@ class SepatuController extends Controller
     }
     public function pemesanan(Request $request)
     {
+        $request->validate([
+            'sepatu_id' => 'required', // Memastikan sepatu ID ada
+            'size_id' => 'required', // Memastikan size ID ada
+            'quantity' => 'required|integer|min:1',
+        ], [
+            'bukti.required' => 'Harap upload bukti pembayaran.',
+            'bukti.image' => 'File yang diupload harus berupa gambar.',
+            'bukti.mimes' => 'Hanya diperbolehkan format: jpeg, png, jpg.',
+            'bukti.max' => 'Ukuran gambar maksimal 5MB.',
+            'sepatu_id.required' => 'Sepatu ID diperlukan.',
+            'size_id.required' => 'Size ID diperlukan.',
+            'quantity.required' => 'Jumlah diperlukan.',
+            'quantity.integer' => 'Jumlah harus berupa angka.',
+            'quantity.min' => 'Jumlah minimal adalah 1.',
+        ]);
+
+        // Mengambil data sepatu beserta ukuran
+        $stock = Sepatu_size::where('sepatu_id', $request->sepatu_id)
+                            ->where('size_id', $request->size_id)
+                            ->first();
+
+        if (!$stock) {
+            return redirect()->back()->withErrors(['size_id' => 'Ukuran sepatu tidak ditemukan.']);
+        }
+
+        if ($stock->quantity < $request->quantity) {
+            return redirect()->back()->withErrors(['quantity' => 'Stok tidak mencukupi.']);
+        }
         Cart::create([
             'customer_id' => Auth::guard('customers')->id(),
             'sepatu_id' => $request->sepatu_id,

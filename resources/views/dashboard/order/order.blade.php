@@ -51,11 +51,14 @@
             <a href="/dashboard-order/{{ $order->id }}" class="btn btn-info btn-sm text-white">
                 Detail
             </a>
+            @if ($order->status != 'selesai')
             <form action="{{ route('orders.confirm', $order->id) }}" method="POST" class="d-inline">
                 @csrf
                 @method('PUT')
                 <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Konfirmasi pesanan ini?')">Konfirmasi</button>
             </form>
+            @endif
+
 
             <form action="/dashboard-order/{{ $order->id }}" method="POST" class="d-inline">
                 @method('DELETE')

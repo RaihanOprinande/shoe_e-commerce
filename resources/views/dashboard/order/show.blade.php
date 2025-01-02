@@ -50,7 +50,7 @@
                 <p><strong>Bukti Pembayaran</strong></p>
                 <img src="{{ asset('storage/' . $orders->bukti_transaksi) }}" alt="Bukti Pembayaran" style=" height: auto;">
             </div>
-            <div class="col">
+            {{-- <div class="col">
                 <div class="form-group">
                     <label for="status">Select Status:</label>
                     <select name="status" id="status" class="form-control" required>
@@ -68,7 +68,7 @@
                     @method('PUT')
                     <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Konfirmasi pesanan ini?')">Konfirmasi</button>
                 </form>
-            </div>
+            </div> --}}
         </div>
 
     </div>

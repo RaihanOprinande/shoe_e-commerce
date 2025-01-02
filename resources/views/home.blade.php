@@ -7,24 +7,21 @@
 <body>
     <div class="container-fluid">
         {{-- HEROES --}}
-        <div class="heroes">
-            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-                <div class="col-10 col-sm-8 col-lg-6 gambar-heroes">
-                    <img src="/images/baner3.jpg" class="d-block mx-lg-auto img-fluid mt-5" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
-                </div>
-                <div class="col-lg-6 isi-heroes">
-                    <h1 class="display-5 fw-bold lh-1 mb-3 ms-4">Step-Off: Langkah Pasti untuk Gaya Terbaik!</h1>
-                    <p class="lead ms-4">Step-off with style</p>
-                    <div class="d-grid gap-2 list-page text-center">
-                        <a href="/list">
-                        <div class="mt-2">
-                            List Sepatu
-                        </div>
-                    </a>
-                    </div>
+        <div class="px-4 py-5 my-5 text-center py-5 mb-5 heroes">
+            <div class="isi-heroes">
+                <h1 class="display-5 fw-bold text-center">STEP-OFF</h1>
+                <div class="col-lg-6 mx-auto">
+                  <h3 class="mb-4">Langkah Pasti untuk Gaya Terbaik!</h3>
+                  <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <a href="/list" type="" class="btn btn-dark btn-lg px-4 gap-3">List Sepatu</a>
+
+                    {{-- <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button> --}}
+                  </div>
                 </div>
             </div>
-        </div>
+
+
+          </div>
         {{-- KATEGORI --}}
     <div class="kategori">
         <div class="row">
