@@ -1,12 +1,12 @@
 @extends('dashboard.layouts.main')
 
 @section('content')
-<h1>Orders</h1>
+<h1 class="mb-4">Orders</h1>
 
 <table class="table table-bordered">
     <tr>
         <th>No</th>
-        <th>Nama_customer</th>
+        <th>Nama Customer</th>
         <th>Total Harga</th>
         <th>Tanggal</th>
         <th>Bukti Pembayaran</th>
@@ -21,7 +21,7 @@
         <td>{{ $order->tanggal }}</td>
         <td>
             @if($order->bukti_transaksi)
-                <img src="{{ asset('storage/' . $order->bukti_transaksi) }}" alt="Bukti Pembayaran" style="width: 100px; height: auto; cursor: pointer;"
+                <img src="{{ asset('storage/' . $order->bukti_transaksi) }}" alt="Bukti Pembayaran" style="width: auto; height: 150px; cursor: pointer;"
                      data-bs-toggle="modal" data-bs-target="#imageModal{{ $order->id }}">
                 <!-- Modal -->
                 <div class="modal fade" id="imageModal{{ $order->id }}" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
@@ -43,8 +43,8 @@
             @endif
         </td>
         <td>
-            <span class="badge {{ $order->status == 'pending' ? 'bg-warning' : 'bg-success' }}">
-                {{ $order->status == 'pending' ? 'Prossesing' : 'Sukses' }}
+            <span class="badge {{ $order->status == 'selesai' ? 'bg-success' : 'bg-warning' }}">
+                {{ $order->status }}
             </span>
         </td>
         <td>

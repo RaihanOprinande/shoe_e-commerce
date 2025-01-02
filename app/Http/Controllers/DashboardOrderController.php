@@ -14,7 +14,7 @@ class DashboardOrderController extends Controller
     public function index()
     {
 
-        $orders=Order::with('customers','sepatus','sizes','pengambilans')->orderByRaw("CASE WHEN status != 'selesai' THEN 0 ELSE 1 END, status ASC")->paginate(10);
+        $orders=Order::with('customers','sepatus','sizes','pengambilans')->orderByRaw("CASE WHEN status != 'pending' THEN 1 ELSE 0 END, status ASC")->paginate(10);
         $transactions = TransactionDetail::with('sepatus','sizes','customers')->where('customer_id',Auth::guard('customers')->id())->get();
         $totalHarga = $transactions->map(function($transactions) {
             return ($transactions->quantity * $transactions->sepatus->harga)+$transactions->pengambilan->ongkir;
@@ -63,6 +63,7 @@ class DashboardOrderController extends Controller
     // Simpan data ke tabel pemasukan
     Pemasukan::create([
         'sepatu_id' => $order->sepatu_id,
+        'brand_id' => $order->sepatu_id,
         'size_id'=> $order->size_id,
         'total_harga'=> $total_harga,
         'quantity' => $order->quantity,
@@ -79,21 +80,25 @@ class DashboardOrderController extends Controller
         return view('dashboard.order.show',compact('orders'));
     }
 
-    public function status(Request $request, String $id){
+    public function status(Request $request, $id)
+    {
         $validated = $request->validate([
+            'customer_id' => 'nullable',
+            'sepatu_id' => 'nullable',
+            'brand_id' => 'nullable',
+            'size_id' => 'nullable',
+            'tanggal' => 'nullable',
+            'pengambilan_id' => 'nullable',
+            'harga_ongkir' => 'nullable',
+            'quantity' => 'nullable',
+            'bukti_transaksi' => 'nullable',
             'status' => 'required',
-           //  'quantity' => 'nullable',
-           //  'sepatu_id' => 'nullable',
-           //  'size_id' => 'nullable',
-           //  'tanggal' => 'nullable',
-           ]);
+        ]);
 
-        $order = Order::where('id', $id);
-
+        $order = Order::findOrFail($id);
         $order->update($validated);
 
-
-        return redirect('dashboard-order')->with('pesan','Status berhasil diubah');
+        return redirect('dashboard-order')->with('pesan', 'Status berhasil diubah');
     }
 
 

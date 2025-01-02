@@ -69,7 +69,7 @@ Route::get('/history-order', [HistoryOrderController::class, 'index']);
 Route::resource('/detail-order', HistoryOrderController::class);
 
 // DashboardOrderController routes
-Route::post('/update-status/{id}', [DashboardOrderController::class, 'status']);
+Route::put('/update-status/{id}', [DashboardOrderController::class, 'status']);
 Route::resource('/dashboard-order', DashboardOrderController::class)->middleware(['auth']);
 Route::put('/dashboard-order/{id}/confirm', [DashboardOrderController::class, 'confirmOrder'])->name('orders.confirm');
 Route::post('/dashboard-order/store', [DashboardOrderController::class, 'store']);
@@ -97,7 +97,7 @@ Route::get('/dashboard-pengeluarans/cetak-pdf', [DashboardPengeluaransController
 
 // DashboardIncomesController routes
 Route::resource('/dashboard-income', DashboardIncomesController::class)->middleware(['auth']);
-Route::get('/dashboard-income/cetak-pdf', [DashboardIncomesController::class, 'show'])->name('incomes.cetak-pdf');
+Route::get('/dashboard-income/cetak', [DashboardIncomesController::class, 'show']);
 
 // DashboardSizesController routes
 Route::resource('/dashboard-sizes', DashboardSizesController::class)->middleware(['auth']);

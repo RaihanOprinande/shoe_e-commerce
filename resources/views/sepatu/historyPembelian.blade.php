@@ -8,9 +8,10 @@
     <table class="table table-bordered">
         <thead class="table">
             <tr>
-                <th>No</th>
-                <th>Sepatu</th>
-                <th>Tanggal</th>
+            <th>No</th>
+            <th>Sepatu</th>
+            <th>Brand</th>
+            <th>Tanggal</th>
             <th>Status pembelian</th>
             <th>Total Harga</th>
             <th>Aksi</th>
@@ -21,6 +22,7 @@
         <tr>
             <td>{{ $orders->firstItem() + $loop->index }}</td>
             <td>{{ $order->sepatus->nama }}</td>
+            <td>{{ $order->sepatus->brands->nama_brand }}</td>
             <td>{{ $order->tanggal }}</td>
             <td>{{ $order->status }}</td>
             <td>Rp {{ number_format($order->sepatus->harga * $order->quantity + $order->pengambilans->ongkir, 0, ',', '.') }}</td>

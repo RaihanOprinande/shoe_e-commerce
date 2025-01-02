@@ -11,27 +11,45 @@ use Illuminate\Http\Request;
 
 class DashboardIncomesController extends Controller
 {
+    public function show(Request $request){
+        $query = Pemasukan::query();
+
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $query->whereBetween('tanggal', [$request->start_date, $request->end_date]);
+        }
+        $totalPemasukan = $query->sum('total_harga');
+        $incomes = $query->paginate(10);
+
+        $pdf = Pdf::loadView('dashboard.income.cetak_pdf',[
+            'incomes' => $incomes,
+            'totalPemasukan' => $totalPemasukan,
+        ]);
+
+        return $pdf->stream('laporan-data-pemasukan.pdf');
+    }
 
     public function index(Request $request)
 {
-    // Inisialisasi query untuk model Pemasukan
-    $query = Pemasukan::with('sepatus','sizes')->latest();
+        // Inisialisasi query untuk model Pemasukan
+        $query = Pemasukan::with('sepatus', 'sizes')->latest();
 
-    if ($request->filled('tanggal')) {
-        $query->whereDate('tanggal', $request->tanggal);
-    }
+        if ($request->filled('start_date') && $request->has('end_date')) {
+            $query->whereBetween('tanggal', [$request->start_date, $request->end_date]);
+        }
 
-    // Mengambil data dengan pagination
-    $incomes = $query->paginate(10);
+        // Mengambil data dengan pagination
+        $incomes = $query->paginate(10);
 
-    // Menghitung total pemasukan
-    $totalPemasukan = $query->sum('total_harga');
+        // Menghitung total pemasukan
+        $totalPemasukan = $query->sum('total_harga');
+        $brands = Brands::all();
 
-    // Mengembalikan view dengan data yang diperlukan
-    return view('dashboard.income.income', [
-        'incomes' => $incomes,
-        'totalPemasukan' => $totalPemasukan
-    ]);
+        // Mengembalikan view dengan data yang diperlukan
+        return view('dashboard.income.income', [
+            'incomes' => $incomes,
+            'totalPemasukan' => $totalPemasukan,
+            'brands' => $brands,
+        ]);
 }
 
 

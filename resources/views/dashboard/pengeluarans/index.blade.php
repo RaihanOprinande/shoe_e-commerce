@@ -10,11 +10,13 @@
   </div>
 @endif
 
-<a href="/dashboard-pengeluarans/create" class="btn btn-dark mb-2">Tambah Pengeluaran</a>
+<a href="/dashboard-pengeluarans/create" class="btn btn-dark mb-4 mt-4">Tambah Pengeluaran</a>
 
-<form method="GET" action="{{ url('/dashboard-pengeluarans') }}" class="mb-3">
+{{-- FILTER TAMPILAN PENGELUARAN --}}
+<form method="GET" action="/dashboard-pengeluarans" class="mb-3">
+    <h4>Filter Tampilan</h4>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <select name="kategori_id" class="form-select">
                 <option value="">Pilih Kategori</option>
                 @foreach ($kategoris as $kategori)
@@ -24,18 +26,20 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-md-4">
-            <input type="date" name="date" class="form-control" value="{{ request('date') }}">
+        <div class="col-md-3">
+            <input type="date" name="start_date" class="form-control" value="{{ request('start_date') }}">
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
+            <input type="date" name="end_date" class="form-control" value="{{ request('end_date') }}">
+        </div>
+        <div class="col-md-1">
             <button type="submit" class="btn btn-dark">Filter</button>
-        </div>
-
-        <div class="col-md-2">
-            {{-- <a href="{{ url('/dashboard-pengeluarans/cetak-pdf') }}" class="btn btn-success mb-2">Cetak Pdf</a> --}}
         </div>
     </div>
 </form>
+{{-- END FILTER PENGELUARAN TAMPILAN --}}
+
+
 
 <table class="table table-bordered">
     <thead class="table-dark">
@@ -80,6 +84,32 @@
         </tr>
     </tfoot>
 </table>
+{{-- FILTER CETAK --}}
+<form method="GET" action="/dashboard-pengeluarans/cetak" class="mb-5 mt-5">
+    <h4>Filter Cetak</h4>
+    <div class="row">
+        <div class="col-md-3">
+            <select name="kategori_id" class="form-select">
+                <option value="">Pilih Kategori</option>
+                @foreach ($kategoris as $kategori)
+                    <option value="{{ $kategori->id }}" {{ request('kategori_id') == $kategori->id ? 'selected' : '' }}>
+                        {{ $kategori->nama }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-3">
+            <input type="date" name="start_date" class="form-control" value="{{ request('start_date') }}">
+        </div>
+        <div class="col-md-3">
+            <input type="date" name="end_date" class="form-control" value="{{ request('end_date') }}">
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-success">Cetak PDF</button>
+        </div>
+    </div>
+</form>
+{{-- END FILTER CETAK --}}
 
 <div class="mt-3">
     {{ $pengeluarans->links() }}

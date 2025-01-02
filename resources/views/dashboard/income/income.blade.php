@@ -3,13 +3,16 @@
 @section('content')
     <h1 class="mb-4">Data Keuangan Pemasukan</h1>
 
-    <form method="GET" action="{{ url('/dashboard-income') }}" class="mb-3">
+    <form method="GET" action="/dashboard-income" class="mb-3">
         <div class="row">
-            <div class="col-md-4">
-                <input type="date" name="tanggal" class="form-control" value="{{ request('tanggal') }}">
+            <div class="col-md-3">
+                <input type="date" name="start_date" class="form-control" value="{{ request('start_date') }}">
             </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-dark">Cari</button>
+            <div class="col-md-3">
+                <input type="date" name="end_date" class="form-control" value="{{ request('end_date') }}">
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-dark">Filter</button>
             </div>
         </div>
     </form>
@@ -67,9 +70,22 @@
         </tfoot>
     </table>
 
-    {{-- <a href="{{ url('/dashboard-income/cetak-pdf') }}" class="btn btn-success mb-2">Cetak Pdf</a> --}}
+
 
     <div class="d-flex justify-content-center mt-3">
         {{ $incomes->links() }}
     </div>
+    <form method="GET" action="/dashboard-income/cetak" class="mb-3">
+        <div class="row">
+            <div class="col-md-3">
+                <input type="date" name="start_date" class="form-control" value="{{ request('start_date') }}">
+            </div>
+            <div class="col-md-3">
+                <input type="date" name="end_date" class="form-control" value="{{ request('end_date') }}">
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-success">Cetak PDF</button>
+            </div>
+        </div>
+    </form>
     @endsection

@@ -14,27 +14,47 @@ use Illuminate\Http\Request;
 class DashboardPengeluaransController extends Controller
 {
 
-    public function show(){
-        // $pdf = Pdf::loadView('dashboard.pengeluarans.cetak_pdf', ['pengeluarans'=> Pengeluaran::all()]);
-        // return $pdf->stream('laporan-data-pengeluaran.pdf');
+    public function show(Request $request){
+
+        {
+            $query = Pengeluaran::query();
+
+            if ($request->filled('kategori_id')) {
+                $query->where('kategori_id', $request->kategori_id);
+            }
+
+            if ($request->filled('start_date') && $request->filled('end_date')) {
+                $query->whereBetween('date', [$request->start_date, $request->end_date]);
+            }
+
+            $totalHarga = $query->sum('uang');
+            $total = $query->sum('uang');
+            $pengeluarans = $query->with('kategori')->paginate(10);
+
+            $tanggal = Pengeluaran::latest()->paginate(10);
+            $kategoris = KategoriPengeluaran::latest()->paginate(10);
+
+            $pdf = PDF::loadView('dashboard.pengeluarans.cetak_pdf', [
+                'pengeluarans' => $pengeluarans,
+                'totalHarga' => $totalHarga,
+            ]);
+
+            return $pdf->stream('laporan-data-pengeluaran.pdf');
+        }
     }
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
 {
-    $query = Pengeluaran::query();
-
-    // if ($request->filled('kategori_id')) {
-    //     $query->where('kategori_id', $request->kategori_id);
-    // }
+    $query = Pengeluaran::query()->latest();
 
     if ($request->filled('kategori_id')) {
         $query->where('kategori_id', $request->kategori_id);
     }
 
-    if ($request->filled('date')) {
-        $query->whereDate('date', $request->date);
+    if ($request->filled('start_date') && $request->has('end_date')) {
+        $query->whereBetween('date', values: [$request->start_date, $request->end_date]);
     }
 
 

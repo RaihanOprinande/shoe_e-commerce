@@ -23,7 +23,7 @@
             <td><img src="{{ asset('storage/' . $cart->sepatus->gambar_sepatu) }}" alt="" style="height: 250px; width: 250px; object-fit: contain;"></td>
             <td>{{ $cart->sepatus->nama }}</td>
             <td>{{ $cart->sepatus->brands->nama_brand }}</td>
-            <td>{{ $cart->size_id }}</td>
+            <td>{{ $cart->sizes->size }}</td>
             <td>{{ $cart->quantity }}</td>
             <td>Rp. {{ number_format($cart->sepatus->harga, 0, ',', '.') }}</td>
             <td><span id="totalHarga">Rp {{ number_format($totalHarga + $cart->quantity * $cart->sepatus->harga, 0, ',', '.') }}</span></td>

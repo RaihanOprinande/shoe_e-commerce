@@ -171,7 +171,7 @@ class SepatuController extends Controller
         'pengambilan_id' => $request->pengambilan_id,
         'quantity' => $request->quantity,
         'bukti_transaksi' => $path,
-        'status' => 'pending',
+        'status' => 'diproses',
     ]);
     Cart::where('customer_id',Auth::guard('customers')->id())->delete();
 

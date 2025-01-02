@@ -35,7 +35,7 @@
 
     <div class="customer-info mt-5">
         <div class="row">
-            <div class="col-2">
+            <div class="col-3">
                 <div class="name">
                     <p><strong>Nama</strong> : {{ $orders->customers->name }}</p>
                 </div>
@@ -46,29 +46,46 @@
                     <p><strong>Alamat</strong> : {{ $orders->customers->alamat }}</p>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-5">
                 <p><strong>Bukti Pembayaran</strong></p>
-                <img src="{{ asset('storage/' . $orders->bukti_transaksi) }}" alt="Bukti Pembayaran" style=" height: auto;">
+                <img src="{{ asset('storage/' . $orders->bukti_transaksi) }}" alt="Bukti Pembayaran" style=" height: 650px;">
             </div>
-            {{-- <div class="col">
-                <div class="form-group">
-                    <label for="status">Select Status:</label>
-                    <select name="status" id="status" class="form-control" required>
-                        <option value="">-- Status --</option>
-                            <option value="diproses">Diproses</option>
-                            <option value="dikirim">Dikirim</option>
-                            <option value="pending">Sukses</option>
 
-                    </select>
+            <div class="col-2">
+                    <form action=" /update-status/{{ $orders->id }}" method="POST" class="d-inline">
+                    <div class="form-group">
+                        <label for="status">Select Status:</label>
+                        <select name="status" id="status" class="form-control" required>
+                            <option value="">-- Status --</option>
+                                <option value="diproses">Dikemas</option>
+                                <option value="dikirim">Dikirim</option>
+                                <option value="pending">Bisa Diambil</option>
+
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="col">
-                <form action=" /update-status/{{ $orders->id }}" method="POST" class="d-inline">
+            <div class="col mt-4">
                     @csrf
                     @method('PUT')
-                    <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Konfirmasi pesanan ini?')">Konfirmasi</button>
+                    <button type="submit" class="btn btn-success " onclick="return confirm('Konfirmasi pesanan ini?')">Ubah Status</button>
                 </form>
-            </div> --}}
+                </div>
+
+            @if ($errors->any())
+            <div class="alert alert-danger mt-3">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if (session('pesan'))
+            <div class="alert alert-success mt-3">
+                {{ session('pesan') }}
+            </div>
+        @endif
         </div>
 
     </div>

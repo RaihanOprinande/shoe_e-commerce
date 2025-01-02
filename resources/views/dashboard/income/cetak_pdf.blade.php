@@ -45,27 +45,32 @@
 
 <table>
     <tr>
-        <th class="no">No</th>
-        <th class="nama">Nama</th>
-        <th class="harga">Harga</th>
-        <th class="kategori">Kategori</th>
-        <th class="merek">Merek</th>
-        <th class="size">Size</th>
-        <th class="jumlah">Jumlah</th>
-        <th class="total">Total</th>
+        <th>No</th>
+        <th>Sepatu</th>
+        <th>Brand</th>
+        <th>Harga Satuan</th>
+        <th>Ukuran</th>
+        <th>quantity</th>
+        <th>Tanggal</th>
+        <th>Total Harga</th>
     </tr>
-    @foreach ($pemasukans as $pemasukan)
+    @foreach ($incomes as $data)
     <tr>
         <td>{{ $loop->iteration }}</td>
-        <td>{{ $pemasukan->nama }}</td>
-        <td>{{ $pemasukan->harga }}</td>
-        <td>{{ $pemasukan->kategori->nama }}</td>
-        <td>{{ $pemasukan->merek->nama_brand }}</td>
-        <td>{{ $pemasukan->size->size }}</td>
-        <td>{{ $pemasukan->jumlah }}</td>
-        <td>{{ $pemasukan->total }}</td>
+        <td>{{ $data->sepatus->nama }}</td>
+        <td>{{ $data->sepatus->brands->nama_brand }}</td>
+        <td>Rp {{ number_format($data->sepatus->harga, 0, ',', '.') }}</td>
+        <td>{{ $data->sizes->size }}</td>
+        <td>{{ $data->quantity }}</td>
+        <td>{{ $data->tanggal ? $data->tanggal->format('d-m-Y') : '-' }}</td>
+        <td>Rp {{ number_format($data->total_harga, 0, ',', '.') }}</td>
     </tr>
     @endforeach
+    <tr class="table-secondary">
+        <td colspan="7" class="text-start fw-bold">Total Pemasukan:</td>
+
+        <td class="fw-bold">Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</td>
+    </tr>
 </table>
 
 </body>

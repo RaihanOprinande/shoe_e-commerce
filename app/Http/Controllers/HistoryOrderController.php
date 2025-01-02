@@ -10,7 +10,8 @@ class HistoryOrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::where('customer_id',Auth::guard('customers')->id())->paginate(10);
+
+        $orders = Order::where('customer_id',Auth::guard('customers')->id())->orderByRaw("CASE WHEN status != 'pending' THEN 1 ELSE 0 END, status ASC")->paginate(10);
         return view('sepatu.historyPembelian', compact('orders'));
     }
 
