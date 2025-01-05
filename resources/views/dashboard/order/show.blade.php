@@ -57,9 +57,9 @@
                         <label for="status">Select Status:</label>
                         <select name="status" id="status" class="form-control" required>
                             <option value="">-- Status --</option>
-                                <option value="diproses">Dikemas</option>
-                                <option value="dikirim">Dikirim</option>
-                                <option value="pending">Bisa Diambil</option>
+                                <option value="total pengiriman salah">Total pengiriman salah</option>
+                                <option value="Dikirim">Dikirim</option>
+                                <option value="Bisa Diambil">Bisa Diambil</option>
 
                         </select>
                     </div>

@@ -5,7 +5,7 @@
 
   @if (session('pesan'))
   <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <strong>Hei Tayo!</strong> {{session('pesan')}}
+     {{session('pesan')}}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
   @endif

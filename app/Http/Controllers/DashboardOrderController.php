@@ -14,7 +14,7 @@ class DashboardOrderController extends Controller
     public function index()
     {
 
-        $orders=Order::with('customers','sepatus','sizes','pengambilans')->orderByRaw("CASE WHEN status != 'pending' THEN 1 ELSE 0 END, status ASC")->paginate(10);
+        $orders=Order::with('customers','sepatus','sizes','pengambilans')->orderByRaw("CASE WHEN status != 'selesai' THEN 0 ELSE 1 END, status ASC")->paginate(10);
         $transactions = TransactionDetail::with('sepatus','sizes','customers')->where('customer_id',Auth::guard('customers')->id())->get();
         $totalHarga = $transactions->map(function($transactions) {
             return ($transactions->quantity * $transactions->sepatus->harga)+$transactions->pengambilan->ongkir;
@@ -63,7 +63,6 @@ class DashboardOrderController extends Controller
     // Simpan data ke tabel pemasukan
     Pemasukan::create([
         'sepatu_id' => $order->sepatu_id,
-        'brand_id' => $order->sepatu_id,
         'size_id'=> $order->size_id,
         'total_harga'=> $total_harga,
         'quantity' => $order->quantity,
@@ -85,7 +84,6 @@ class DashboardOrderController extends Controller
         $validated = $request->validate([
             'customer_id' => 'nullable',
             'sepatu_id' => 'nullable',
-            'brand_id' => 'nullable',
             'size_id' => 'nullable',
             'tanggal' => 'nullable',
             'pengambilan_id' => 'nullable',

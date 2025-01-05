@@ -2,6 +2,12 @@
 
 @section('content')
 <div class="container-fluid">
+    @if (session('pesan'))
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+       {{session('pesan')}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
     <div class="title text-center mb-5 mt-4">
         <h1>Order History </h1>
     </div>

@@ -175,7 +175,7 @@ class SepatuController extends Controller
     ]);
     Cart::where('customer_id',Auth::guard('customers')->id())->delete();
 
-    return redirect('home')->with('success', 'Pemesanan berhasil disimpan');
+    return redirect('history-order')->with('pesan', 'Harap tunggu, Pesanan Anda Sedang Diproses');
 
 
     }

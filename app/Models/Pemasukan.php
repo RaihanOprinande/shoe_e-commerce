@@ -13,7 +13,6 @@ class Pemasukan extends Model
     // Tentukan kolom-kolom yang bisa diisi secara massal
     protected $fillable = [
         'sepatu_id',
-        'brand_id',
         'size_id',
         'total_harga',
         'quantity',
